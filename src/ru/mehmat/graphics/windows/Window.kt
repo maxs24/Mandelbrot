@@ -233,6 +233,10 @@ class Window : JFrame(),  ActionListener{
         subType = JMenu("Тип фрактала")
         typeS2 = JMenuItem("Множество Мандельброта для степени 2")
         typeS2.addActionListener {
+            painter.plane.xMin = disXmin
+            painter.plane.xMax = disXmax
+            painter.plane.yMin = disYmin
+            painter.plane.yMax = disYmax
             m.n = 2
             painter.created = false
             mainPanel.repaint()
@@ -241,6 +245,10 @@ class Window : JFrame(),  ActionListener{
 
         typeS3 = JMenuItem("Множество Мандельброта для степени 3")
         typeS3.addActionListener {
+            painter.plane.xMin = disXmin
+            painter.plane.xMax = disXmax
+            painter.plane.yMin = disYmin
+            painter.plane.yMax = disYmax
             m.n = 3
             painter.created = false
             mainPanel.repaint()
@@ -249,6 +257,10 @@ class Window : JFrame(),  ActionListener{
 
         typeS4 = JMenuItem("Множество Мандельброта для степени 4")
         typeS4.addActionListener {
+            painter.plane.xMin = disXmin
+            painter.plane.xMax = disXmax
+            painter.plane.yMin = disYmin
+            painter.plane.yMax = disYmax
             m.n = 4
             painter.created = false
             mainPanel.repaint()
@@ -256,6 +268,10 @@ class Window : JFrame(),  ActionListener{
         subType.add(typeS4)
         typeS12 = JMenuItem("Множество Мандельброта для степени 12")
         typeS12.addActionListener {
+            painter.plane.xMin = disXmin
+            painter.plane.xMax = disXmax
+            painter.plane.yMin = disYmin
+            painter.plane.yMax = disYmax
             m.n = 12
             painter.created = false
             mainPanel.repaint()
