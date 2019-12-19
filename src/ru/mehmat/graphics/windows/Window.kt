@@ -1,5 +1,4 @@
 package ru.mehmat.graphics.windows
-
 import ru.mehmat.graphics.convertation.CartesianScreenPlane
 import ru.mehmat.graphics.painters.FractalPainter
 import ru.mehmat.graphics.windows.components.MainPanel
@@ -29,17 +28,43 @@ class Window : JFrame(),  ActionListener{
     override fun actionPerformed(p0: ActionEvent?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
-    private val mainPanel: MainPanel
-    //private var controlPanel: JPanel
-    /*private val btnExit: JButton
-    private val cbColor: JCheckBox
+//private var controlPanel: JPanel
+/*private val btnExit: JButton
+         private val cbColor: JCheckBox
     private val cbProp: JCheckBox
-    private val btnSaveImg: JButton*/
+         private val btnSaveImg: JButton*/
+    private val mainPanel: MainPanel
 
     private val dim: Dimension
 
     private val painter: FractalPainter
+
+    private val disXmin = -1.5
+    private val disXmax = 1.5
+    private val disYmin = -1.5
+    private val disYmax =  1.5
+
+    private val menubar: JMenuBar
+    private val menuFile: JMenu
+
+    private var discharge: JMenuItem
+    private var save: JMenuItem
+    private var open: JMenuItem
+    private var close: JMenuItem
+
+    private val menuFractal: JMenu
+    private val subColor: JMenu
+    private var itm_subColor: JMenuItem
+    private var iterFractal: JCheckBoxMenuItem
+    private var prop: JCheckBoxMenuItem
+    private var subType: JMenu
+    private var typeS2: JMenuItem
+    private var typeS3: JMenuItem
+    private var typeS4: JMenuItem
+    private var typeS12: JMenuItem
+    private var julia: JMenuItem
+    private var anim: JMenuItem
+
 
     private val cs0: (Float) -> Color = {
         if (abs(it) < 1e-10) Color.BLACK else Color.WHITE
@@ -68,42 +93,43 @@ class Window : JFrame(),  ActionListener{
         )
     }
 
+
     init {
         defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         dim = Dimension(500, 500)
         minimumSize = dim
 
-        val plane = CartesianScreenPlane(
-            -1,
-            -1,
-            -1.5,
-            1.5,
-            -1.5,
-            1.5
-        )
 
+        var plane = CartesianScreenPlane(
+            -1,
+            -1,
+            disXmin,
+            disXmax,
+            disYmin,
+            disYmax
+        )
 ////////
         val m = Mandelbrot(2)
         painter = FractalPainter(plane, m)
         mainPanel = MainPanel(painter)
         //controlPanel = JPanel()
 
-        var q = false
-
 
         // создаем панель меню
-        val menubar = JMenuBar()
+        menubar = JMenuBar()
         // создаем 1е меню
-        val menuFile = JMenu("Файл")
+        menuFile = JMenu("Файл")
         // ------------------------------------
         // добавление простых элементов меню
         // элемент 1
-        var itmFile = JMenuItem("Исходная область")
-        menuFile.add(itmFile)
-        itmFile.addActionListener(this)
+        discharge = JMenuItem("Исходная область")
+        menuFile.add(discharge)
+        //вызов определяется внизу после анимации
+
+
         // элемент 2
-        itmFile = JMenuItem("Сохранить как..")
-        itmFile.addActionListener {
+        save = JMenuItem("Сохранить как..")
+        save.addActionListener {
             painter.buf?.let {
                 val buf = BufferedImage(it.width, it.height + 100, BufferedImage.TYPE_INT_RGB)
                 buf.graphics.drawImage(it, 0, 0, it.width, it.height, null)
@@ -117,25 +143,30 @@ class Window : JFrame(),  ActionListener{
                 saveImageFile(buf, this)
             }
         }
-        menuFile.add(itmFile)
-        // элемент 3
-        itmFile = JMenuItem("Закрыть")
+        menuFile.add(save)
+
+        open = JMenuItem("Открыть..")
+        menuFile.add(open)
+        open.addActionListener(this)
+
+
+        close = JMenuItem("Закрыть")
         //itm.addActionListener(this)
-        itmFile.addActionListener {
+        close.addActionListener {
             //закрыть окно по нажатию
             exitProcess(0)
         }
-        menuFile.add(itmFile)
+        menuFile.add(close)
         menubar.add(menuFile)
 
 
         // добавляем панель меню в окно
-        val menuFractal = JMenu("Фрактал")
+        menuFractal = JMenu("Фрактал")
 
         //подменю цветовых схем
-        var subColor = JMenu("Цветовая схема")
+        subColor = JMenu("Цветовая схема")
         //val submenu = JMenu("Sub")
-        var itm_subColor = JMenuItem("Черно-белая")
+        itm_subColor = JMenuItem("Черно-белая")
         itm_subColor.addActionListener {
             val cs = cs0
             painter.setColorScheme(cs)
@@ -162,12 +193,12 @@ class Window : JFrame(),  ActionListener{
         // добавляем вложенное меню
         menuFractal.add(subColor)
 
-        var iterFractal = JCheckBoxMenuItem("Динамические итерации")
+        iterFractal = JCheckBoxMenuItem("Динамические итерации")
         iterFractal.addActionListener(this)
         menuFractal.add(iterFractal)
 
-        var prop = JCheckBoxMenuItem("Соблюдение пропорций")
-        prop.addActionListener {
+        prop = JCheckBoxMenuItem("Соблюдение пропорций")
+        prop.addActionListener  {
             painter.proportion = prop.isSelected
             if (prop.isSelected) {
                 painter.xmin = painter.plane.xMin
@@ -199,16 +230,16 @@ class Window : JFrame(),  ActionListener{
 
 
         //подменю типов фрактала
-        var subType = JMenu("Тип фрактала")
-        var typeS2 = JMenuItem("Множество Мандельброта для степени 2")
+        subType = JMenu("Тип фрактала")
+        typeS2 = JMenuItem("Множество Мандельброта для степени 2")
         typeS2.addActionListener {
             m.n = 2
             painter.created = false
             mainPanel.repaint()
-        }
+    }
         subType.add(typeS2)
 
-        var typeS3 = JMenuItem("Множество Мандельброта для степени 3")
+        typeS3 = JMenuItem("Множество Мандельброта для степени 3")
         typeS3.addActionListener {
             m.n = 3
             painter.created = false
@@ -216,15 +247,14 @@ class Window : JFrame(),  ActionListener{
         }
         subType.add(typeS3)
 
-        var typeS4 = JMenuItem("Множество Мандельброта для степени 4")
+        typeS4 = JMenuItem("Множество Мандельброта для степени 4")
         typeS4.addActionListener {
             m.n = 4
             painter.created = false
             mainPanel.repaint()
         }
         subType.add(typeS4)
-
-        var typeS12 = JMenuItem("Множество Мандельброта для степени 12")
+        typeS12 = JMenuItem("Множество Мандельброта для степени 12")
         typeS12.addActionListener {
             m.n = 12
             painter.created = false
@@ -232,7 +262,7 @@ class Window : JFrame(),  ActionListener{
         }
         subType.add(typeS12)
 
-        var julia = JMenuItem("Множество Жулиа")
+        julia = JMenuItem("Множество Жулиа")
         julia.addActionListener {
             var x: Int
             var y: Int
@@ -242,9 +272,33 @@ class Window : JFrame(),  ActionListener{
         menuFractal.add(subType)
 
         //Анимация
-        var anim = JMenuItem("Анимация")
+        anim = JMenuItem("Анимация")
         anim.addActionListener(this)
         menuFractal.add(anim)
+
+        discharge.addActionListener{
+            painter.plane.xMin = disXmin
+            painter.plane.xMax = disXmax
+            painter.plane.yMin = disYmin
+            painter.plane.yMax = disYmax
+            painter.created = false
+
+            val cs = cs0
+            painter.setColorScheme(cs)
+
+            painter.proportion = false
+            if(prop.isSelected){
+                prop.isSelected=false
+            }
+
+
+            if(iterFractal.isSelected){
+                iterFractal.isSelected=false
+            }
+            mainPanel.repaint()
+        }
+
+
 
         menubar.add(menuFractal)
 
@@ -284,7 +338,6 @@ class Window : JFrame(),  ActionListener{
         painter.plane.realHeight = mainPanel.height
         isVisible = true
     }
-
     private fun getFileName(fileFilter: FileNameExtensionFilter, parent: Component? = null): String? {
         var s: String? = null
         val d = JFileChooser()
@@ -302,7 +355,6 @@ class Window : JFrame(),  ActionListener{
         }
         return s
     }
-
     private fun saveImageFile(img: BufferedImage, parent: Component? = null): Boolean {
         val filefilter = FileNameExtensionFilter("JPG File", "jpg")
         val fileName = getFileName(filefilter, parent)
@@ -312,11 +364,8 @@ class Window : JFrame(),  ActionListener{
         }
         return true
     }
-
     private fun saveImage(fileName: String, img: BufferedImage): Boolean =
         saveImage(File(fileName), img)
-
-
     private fun saveImage(file: File, img: BufferedImage): Boolean {
         var ok = false
         if (!file.exists() || file.canWrite()) {
