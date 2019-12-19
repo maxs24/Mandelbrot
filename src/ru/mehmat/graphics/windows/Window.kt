@@ -244,7 +244,9 @@ class Window : JFrame(),  ActionListener{
 
         //Анимация
         var anim = JMenuItem("Анимация")
-        anim.addActionListener(this)
+        anim.addActionListener{
+            EditWindow(painter)
+        }
         menuFractal.add(anim)
 
         menubar.add(menuFractal)
