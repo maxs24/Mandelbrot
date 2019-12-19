@@ -68,13 +68,12 @@ class Window : JFrame(),  ActionListener{
         )
     }
 
-
     init {
         defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         dim = Dimension(500, 500)
         minimumSize = dim
 
-        var plane = CartesianScreenPlane(
+        val plane = CartesianScreenPlane(
             -1,
             -1,
             -1.5,
