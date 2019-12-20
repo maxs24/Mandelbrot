@@ -1,15 +1,22 @@
 package ru.mehmat.graphics.windows
 
+import ru.mehmat.graphics.convertation.CartesianPlane
+import ru.mehmat.graphics.convertation.CartesianScreenPlane
 import ru.mehmat.graphics.painters.FractalPainter
 import ru.mehmat.graphics.windows.components.MainPanel
+import ru.mehmat.math.fractals.Mandelbrot
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.event.ActionEvent
 import java.awt.image.BufferedImage
 import java.util.*
 import javax.swing.*
+import kotlin.collections.ArrayList
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
-class EditWindow(private val painter: FractalPainter) : JFrame() {
+
+
+class EditWindow() : JFrame() {
 
     private val editmainPanel: MainPanel
     private val editcontrolPanel: JPanel
@@ -18,18 +25,29 @@ class EditWindow(private val painter: FractalPainter) : JFrame() {
     private val btnStart: JButton
     private val durVideo: JSpinner
     private val frameListPanel: JPanel
-    private val frameList: JList<String>
+    private var frameList: JList<BufferedImage>
 
     private val dim: Dimension
     private val editPainter: FractalPainter
 
     init {
-        defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
-        dim = Dimension(500, 400)
+        defaultCloseOperation = WindowConstants.DISPOSE_ON_CLOSE
+        dim = Dimension(700, 500)
         minimumSize = dim
 
+        var plane = CartesianScreenPlane(
+            -1,
+            -1,
+            -1.5,
+            1.5,
+            -1.5,
+            1.5
+        )
 
-        editPainter = FractalPainter(painter.plane, painter.fractal)
+////////
+        val m = Mandelbrot(2)
+        editPainter = FractalPainter(plane, m)
+        editPainter.proportion=true
         editmainPanel = MainPanel(editPainter)
         editcontrolPanel = JPanel()
         frameListPanel = JPanel()
@@ -37,7 +55,16 @@ class EditWindow(private val painter: FractalPainter) : JFrame() {
         btnRemove = JButton("Удалить")
         btnStart = JButton("Начать создание видео")
         durVideo = JSpinner(SpinnerNumberModel(10, 1, 75, 1))
-        frameList = JList()
+        val mas = Vector<BufferedImage>()
+        val imgCoords = ArrayList<CartesianPlane>()
+        frameList = JList(mas)
+
+        btnAdd.addActionListener {
+            editPainter.buf?.let {
+                mas.addElement(it)
+                imgCoords.add(CartesianPlane(plane.xMin,plane.xMax,plane.yMin,plane.yMax))
+            }
+        }
         val gl = GroupLayout(contentPane)
         layout = gl
         gl.setHorizontalGroup(
@@ -52,7 +79,7 @@ class EditWindow(private val painter: FractalPainter) : JFrame() {
                 .addGap(4)
                 .addComponent(
                     editcontrolPanel,
-                    GroupLayout.PREFERRED_SIZE,
+                    (dim.width * 0.4).toInt(),
                     GroupLayout.PREFERRED_SIZE,
                     GroupLayout.PREFERRED_SIZE
                 )
@@ -69,14 +96,14 @@ class EditWindow(private val painter: FractalPainter) : JFrame() {
                             GroupLayout.DEFAULT_SIZE,
                             GroupLayout.DEFAULT_SIZE
                         )
-                        .addComponent(editcontrolPanel,
+                        .addComponent(
+                            editcontrolPanel,
                             dim.height.toInt(),
                             GroupLayout.DEFAULT_SIZE,
                             GroupLayout.DEFAULT_SIZE
-                            )
+                        )
                 )
         )
-
 
 
         val gl2 = GroupLayout(editcontrolPanel)
@@ -108,9 +135,9 @@ class EditWindow(private val painter: FractalPainter) : JFrame() {
                     frameListPanel,
                     dim.height,
                     GroupLayout.PREFERRED_SIZE,
-                    GroupLayout.PREFERRED_SIZE
+                    Int.MAX_VALUE
                 )
-                .addGap(4,4, Int.MAX_VALUE)
+                .addGap(4)
                 .addComponent(btnRemove)
                 .addGap(4)
                 .addComponent(
