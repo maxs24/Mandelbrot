@@ -290,12 +290,10 @@ class Window : JFrame(),  ActionListener{
         menuFractal.add(subType)
 
         //Анимация
-        var anim = JMenuItem("Анимация")
+        anim = JMenuItem("Анимация")
         anim.addActionListener{
             EditWindow()
         }
-        anim = JMenuItem("Анимация")
-        anim.addActionListener(this)
         menuFractal.add(anim)
 
         discharge.addActionListener{
