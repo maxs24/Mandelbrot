@@ -14,6 +14,9 @@ import java.awt.image.BufferedImage
 import java.util.*
 import javax.swing.*
 import kotlin.collections.ArrayList
+import java.awt.AWTEventMulticaster.getListeners
+
+
 
 
 class EditWindow() : JFrame() {
@@ -67,9 +70,14 @@ class EditWindow() : JFrame() {
         btnStart.addActionListener {
             val time = durVideo.value.toString().toInt()
             val timforone = time / (imgCoords.size - 1)
-            val fps = 5
+            val fps = 30
             val framecount = timforone * fps
             var out: SeekableByteChannel? = null
+            plane.xMin=-1.5
+            plane.yMin=-1.5
+            plane.yMax=1.5
+            plane.xMax=1.5
+
 
             try {
                 out = NIOUtils.writableFileChannel("./outt.mp4")
@@ -100,6 +108,7 @@ class EditWindow() : JFrame() {
 
 
         btnAdd.addActionListener {
+
             imgCoords.add(CartesianPlane(plane.xMin, plane.xMax, plane.yMin, plane.yMax))
             mas.addElement("xMin: " + plane.xMin.toString() + " xMax: " + plane.xMax.toString() + " yMin: " + plane.yMin.toString() + " yMax: " + plane.yMax.toString())
         }
