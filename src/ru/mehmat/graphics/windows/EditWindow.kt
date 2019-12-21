@@ -1,11 +1,12 @@
 package ru.mehmat.graphics.windows
 
-
+import jcodec.javase.src.main.java.org.jcodec.api.awt.AWTSequenceEncoder
 import org.jcodec.api.FrameGrab
 import org.jcodec.api.SequenceEncoder
 import org.jcodec.common.Codec
 import org.jcodec.common.Format
 import org.jcodec.common.io.NIOUtils
+import org.jcodec.common.io.SeekableByteChannel
 import org.jcodec.common.model.ColorSpace
 import org.jcodec.common.model.Picture
 import org.jcodec.common.model.PictureHiBD
@@ -30,6 +31,7 @@ import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 import java.awt.AWTEventMulticaster.getListeners
 import java.awt.AWTEventMulticaster.getListeners
 import org.jcodec.containers.mp4.boxes.Box.path
+import java.awt.AWTEvent
 import java.awt.AWTEventMulticaster.getListeners
 import java.io.SequenceInputStream
 
@@ -37,6 +39,7 @@ import java.awt.AWTEventMulticaster.getListeners
 import java.io.ByteArrayOutputStream
 import java.awt.AWTEventMulticaster.getListeners
 import java.awt.AWTEventMulticaster.getListeners
+import java.nio.ByteBuffer
 
 
 class EditWindow() : JFrame() {
@@ -82,21 +85,16 @@ class EditWindow() : JFrame() {
 
         btnStart.addActionListener {
             val fr = 100
+            var out:SeekableByteChannel? = null
             editPainter.buf?.let {
-                val enc =
-                    SequenceEncoder.createSequenceEncoder(File("C:/Users/Danis/IdeaProjects/Mandelbrot/outt.mp4"), 20)
-                val baos = ByteArrayOutputStream()
-                ImageIO.write(it, "png", baos)
-                val imageBytes = baos.toByteArray()
-                val l = Array<ByteArray>(1) { imageBytes }
-                print(l[0])
-                enc.encodeNativeFrame(
-                    Picture.createPicture(
-                        it.width-1, it.height, l, ColorSpace.RGB
-                    )
-                )
-
-
+                try {
+                    out = NIOUtils.writableFileChannel("./outt.mp4")
+                    val encoder = AWTSequenceEncoder(out,Rational.R(25,1))
+                    encoder.encodeImage(it)
+                    encoder.finish()
+                } finally {
+                    NIOUtils.closeQuietly(out)
+                }
             }
 
         }
@@ -119,7 +117,7 @@ class EditWindow() : JFrame() {
                 .addGap(4)
                 .addComponent(
                     editmainPanel,
-                    (dim.width * 0.7).toInt(),
+                    (dim.width * 0.8).toInt(),
                     GroupLayout.DEFAULT_SIZE,
                     GroupLayout.DEFAULT_SIZE
                 )
