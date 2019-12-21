@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b0393121-fe54-4e64-bea5-3eb3533166d1" name="Default Changelist" comment="">
+    <list default="true" id="b0393121-fe54-4e64-bea5-3eb3533166d1" name="Default Changelist" comment="new">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/org_jcodec_jcodec_0_2_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/src/main/java/org/jcodec/api/awt/AWTFrameGrab.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/src/main/java/org/jcodec/api/awt/AWTSequenceEncoder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/src/main/java/org/jcodec/api/awt/SequenceMuxer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/src/main/java/org/jcodec/api/transcode/filter/AWTFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/src/main/java/org/jcodec/codecs/pngawt/PNGDecoder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/src/main/java/org/jcodec/codecs/pngawt/PNGEncoder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/src/main/java/org/jcodec/scale/AWTUtil.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/Window$15.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jcodec" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/outt.mp4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/mehmat/graphics/windows/EditWindow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/mehmat/graphics/windows/EditWindow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,8 +31,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/windows/EditWindow.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="94" column="43" lean-forward="true" selection-start-line="94" selection-start-column="43" selection-end-line="94" selection-end-column="43" />
+            <state relative-caret-position="192">
+              <caret line="91" column="74" lean-forward="true" selection-start-line="91" selection-start-column="74" selection-end-line="91" selection-end-column="74" />
               <folding>
                 <element signature="e#36#1595#0" expanded="true" />
               </folding>
@@ -205,6 +218,45 @@
               <item name="Mandelbrot" type="b2602c69:ProjectViewProjectNode" />
               <item name="Mandelbrot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="javase" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mandelbrot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mandelbrot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="javase" type="462c0819:PsiDirectoryNode" />
+              <item name="jcodec" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mandelbrot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mandelbrot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="javase" type="462c0819:PsiDirectoryNode" />
+              <item name="jcodec" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mandelbrot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mandelbrot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="javase" type="462c0819:PsiDirectoryNode" />
+              <item name="jcodec" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="awt" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mandelbrot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mandelbrot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="javase" type="462c0819:PsiDirectoryNode" />
+              <item name="jcodec" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="filter" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mandelbrot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mandelbrot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="mehmat" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -305,7 +357,7 @@
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1576946562273" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1576946892090" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -440,7 +492,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576946224493</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="new">
+      <created>1576946613448</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1576946613448</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -455,12 +514,12 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48569277" visible="true" weight="0.43909347" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.48569277" weight="0.43909347" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49924698" weight="0.3988764" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.21269841" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.21246459" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5143072" side_tool="true" weight="0.4344569" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49932885" weight="0.3286119" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.48569277" weight="0.32577905" />
@@ -730,8 +789,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/windows/EditWindow.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="94" column="43" lean-forward="true" selection-start-line="94" selection-start-column="43" selection-end-line="94" selection-end-column="43" />
+        <state relative-caret-position="192">
+          <caret line="91" column="74" lean-forward="true" selection-start-line="91" selection-start-column="74" selection-end-line="91" selection-end-column="74" />
           <folding>
             <element signature="e#36#1595#0" expanded="true" />
           </folding>
