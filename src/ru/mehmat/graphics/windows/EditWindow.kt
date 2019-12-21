@@ -72,6 +72,7 @@ class EditWindow() : JFrame() {
         editPainter = FractalPainter(plane, m)
         editPainter.proportion = true
         editmainPanel = MainPanel(editPainter)
+        editmainPanel.dinIter = true
         editcontrolPanel = JPanel()
         frameListPanel = JPanel()
         btnAdd = JButton("Добавить")
