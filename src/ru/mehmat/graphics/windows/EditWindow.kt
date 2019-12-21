@@ -1,45 +1,19 @@
 package ru.mehmat.graphics.windows
 
-import jcodec.javase.src.main.java.org.jcodec.api.awt.AWTSequenceEncoder
-import org.jcodec.api.FrameGrab
-import org.jcodec.api.SequenceEncoder
-import org.jcodec.common.Codec
-import org.jcodec.common.Format
+import jcodecc.javase.src.main.java.org.jcodec.api.awt.AWTSequenceEncoder
 import org.jcodec.common.io.NIOUtils
 import org.jcodec.common.io.SeekableByteChannel
-import org.jcodec.common.model.ColorSpace
-import org.jcodec.common.model.Picture
-import org.jcodec.common.model.PictureHiBD
 import org.jcodec.common.model.Rational
 import ru.mehmat.graphics.convertation.CartesianPlane
 import ru.mehmat.graphics.convertation.CartesianScreenPlane
 import ru.mehmat.graphics.painters.FractalPainter
 import ru.mehmat.graphics.windows.components.MainPanel
 import ru.mehmat.math.fractals.Mandelbrot
-import java.awt.Color
 import java.awt.Dimension
-import java.awt.event.ActionEvent
 import java.awt.image.BufferedImage
-import java.awt.image.DataBufferByte
-import java.awt.image.WritableRaster
-import java.io.File
 import java.util.*
-import javax.imageio.ImageIO
 import javax.swing.*
 import kotlin.collections.ArrayList
-import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
-import java.awt.AWTEventMulticaster.getListeners
-import java.awt.AWTEventMulticaster.getListeners
-import org.jcodec.containers.mp4.boxes.Box.path
-import java.awt.AWTEvent
-import java.awt.AWTEventMulticaster.getListeners
-import java.io.SequenceInputStream
-
-import java.awt.AWTEventMulticaster.getListeners
-import java.io.ByteArrayOutputStream
-import java.awt.AWTEventMulticaster.getListeners
-import java.awt.AWTEventMulticaster.getListeners
-import java.nio.ByteBuffer
 
 
 class EditWindow() : JFrame() {
