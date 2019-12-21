@@ -200,7 +200,6 @@ class Window : JFrame(),  ActionListener{
                 )
                 if (coeffIncrease - 1 > 1e-10) painter.fractal.maxIter =
                     (painter.fractal.minIter * coeffIncrease).toInt()
-                println(painter.fractal.maxIter)
             }else{
                 mainPanel.dinIter=false
                 painter.fractal.maxIter=painter.fractal.minIter

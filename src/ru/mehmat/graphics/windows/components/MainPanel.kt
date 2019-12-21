@@ -91,7 +91,6 @@ class MainPanel (var painter: FractalPainter): JPanel(){
                         val coeffIncrease= (35/painter.fractal.minIter.toDouble())*ln(square/((painter.plane.xMax-painter.plane.xMin)
                                 *(painter.plane.yMax-painter.plane.yMin)))
                         if (coeffIncrease-1>1e-10) painter.fractal.maxIter=(painter.fractal.minIter*coeffIncrease).toInt()
-                        println(painter.fractal.maxIter)
                     }
                 }
             }
