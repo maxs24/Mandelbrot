@@ -7,10 +7,15 @@ import java.awt.Graphics
 import java.awt.event.*
 import javax.swing.JPanel
 import javax.swing.SwingWorker
+import kotlin.math.ln
 
 class MainPanel (var painter: FractalPainter): JPanel(){
     val srp = SelectionRectPainter()
-
+    private var square = 0.0
+    val getSquare: Double
+        get()=square
+    var startApprox = false
+    var dinIter = false
     inner class BackgroundProcess : SwingWorker<Unit, Unit>() {
         override fun doInBackground() {
             painter.create()
@@ -24,6 +29,7 @@ class MainPanel (var painter: FractalPainter): JPanel(){
     private var bgProcess = BackgroundProcess()
 
     init{
+        if (startApprox==false) square=(painter.plane.xMax-painter.plane.xMin)*(painter.plane.yMax-painter.plane.yMin)
         addComponentListener(
             object: ComponentAdapter(){
                 override fun componentResized(e: ComponentEvent?) {
@@ -40,6 +46,7 @@ class MainPanel (var painter: FractalPainter): JPanel(){
                     val y1 = Converter.yScr2Crt(srp.leftTopPoint.y, painter.plane)
                     val x2 = Converter.xScr2Crt(srp.rightBottomPoint.x, painter.plane)
                     val y2 = Converter.yScr2Crt(srp.rightBottomPoint.y, painter.plane)
+                    startApprox=true
                     if (!painter.proportion) {
 
 
@@ -79,6 +86,11 @@ class MainPanel (var painter: FractalPainter): JPanel(){
                             repaint()
 
                         }
+                    }
+                    if (dinIter){
+                        val coeffIncrease= (35/painter.fractal.minIter.toDouble())*ln(square/((painter.plane.xMax-painter.plane.xMin)
+                                *(painter.plane.yMax-painter.plane.yMin)))
+                        if (coeffIncrease-1>1e-10) painter.fractal.maxIter=(painter.fractal.minIter*coeffIncrease).toInt()
                     }
                 }
             }
