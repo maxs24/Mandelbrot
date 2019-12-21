@@ -3,19 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b0393121-fe54-4e64-bea5-3eb3533166d1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/src/main/java/org/jcodec/api/awt/AWTFrameGrab.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/src/main/java/org/jcodec/api/awt/AWTSequenceEncoder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/src/main/java/org/jcodec/api/awt/SequenceMuxer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/src/main/java/org/jcodec/api/transcode/filter/AWTFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/src/main/java/org/jcodec/codecs/pngawt/PNGDecoder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/src/main/java/org/jcodec/codecs/pngawt/PNGEncoder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/jcodec/javase/src/main/java/org/jcodec/scale/AWTUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/mehmat/graphics/windows/EditWindow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/mehmat/graphics/windows/EditWindow.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/mehmat/math/fractals/Mandelbrot.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/mehmat/math/fractals/Mandelbrot.kt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,8 +17,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/windows/EditWindow.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="77" column="73" lean-forward="true" selection-start-line="77" selection-start-column="73" selection-end-line="77" selection-end-column="73" />
+            <state relative-caret-position="192">
+              <caret line="82" column="44" lean-forward="true" selection-start-line="82" selection-start-column="44" selection-end-line="82" selection-end-column="44" />
               <folding>
                 <element signature="e#36#1595#0" expanded="true" />
               </folding>
@@ -41,8 +29,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/painters/FractalPainter.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="41" column="29" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
+            <state relative-caret-position="192">
+              <caret line="83" column="14" lean-forward="true" selection-start-line="83" selection-start-column="14" selection-end-line="83" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -161,7 +149,6 @@
         <option value="$PROJECT_DIR$/src/ru/mehmat/math/Complex.kt" />
         <option value="$PROJECT_DIR$/src/Main.kt" />
         <option value="$PROJECT_DIR$/src/ru/mehmat/graphics/windows/Window.kt" />
-        <option value="$PROJECT_DIR$/src/ru/mehmat/graphics/painters/FractalPainter.kt" />
         <option value="$PROJECT_DIR$/src/awtlib/AWTSequenceEncoder.java" />
         <option value="$PROJECT_DIR$/src/awtlib/AWTUtil.java" />
         <option value="$PROJECT_DIR$/src/asd/AWTUtil.java" />
@@ -182,6 +169,7 @@
         <option value="$PROJECT_DIR$/src/jcodecc/javase/src/main/java/org/jcodec/api/awt/AWTFrameGrab.java" />
         <option value="$PROJECT_DIR$/src/jcodecc/javase/src/main/java/org/jcodec/api/awt/AWTSequenceEncoder.java" />
         <option value="$PROJECT_DIR$/src/ru/mehmat/math/fractals/Mandelbrot.kt" />
+        <option value="$PROJECT_DIR$/src/ru/mehmat/graphics/painters/FractalPainter.kt" />
         <option value="$PROJECT_DIR$/src/ru/mehmat/graphics/windows/EditWindow.kt" />
       </list>
     </option>
@@ -318,7 +306,7 @@
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1576952410524" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1576953024766" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -495,7 +483,21 @@
       <option name="project" value="LOCAL" />
       <updated>1576947706213</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="new">
+      <created>1576952367885</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1576952367885</updated>
+    </task>
+    <task id="LOCAL-00020" summary="new">
+      <created>1576952454531</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1576952454531</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -780,15 +782,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/painters/FractalPainter.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="41" column="29" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
+        <state relative-caret-position="192">
+          <caret line="83" column="14" lean-forward="true" selection-start-line="83" selection-start-column="14" selection-end-line="83" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/windows/EditWindow.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="77" column="73" lean-forward="true" selection-start-line="77" selection-start-column="73" selection-end-line="77" selection-end-column="73" />
+        <state relative-caret-position="192">
+          <caret line="82" column="44" lean-forward="true" selection-start-line="82" selection-start-column="44" selection-end-line="82" selection-end-column="44" />
           <folding>
             <element signature="e#36#1595#0" expanded="true" />
           </folding>
