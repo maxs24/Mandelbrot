@@ -1,4 +1,5 @@
 package ru.mehmat.graphics.windows
+
 import ru.mehmat.graphics.convertation.CartesianScreenPlane
 import ru.mehmat.graphics.painters.FractalPainter
 import ru.mehmat.graphics.windows.components.MainPanel
@@ -108,6 +109,7 @@ class Window : JFrame(),  ActionListener{
             disYmin,
             disYmax
         )
+
 ////////
         val m = Mandelbrot(2)
         painter = FractalPainter(plane, m)
@@ -289,7 +291,9 @@ class Window : JFrame(),  ActionListener{
 
         //Анимация
         anim = JMenuItem("Анимация")
-        anim.addActionListener(this)
+        anim.addActionListener{
+            EditWindow()
+        }
         menuFractal.add(anim)
 
         discharge.addActionListener{
@@ -354,6 +358,7 @@ class Window : JFrame(),  ActionListener{
         painter.plane.realHeight = mainPanel.height
         isVisible = true
     }
+
     private fun getFileName(fileFilter: FileNameExtensionFilter, parent: Component? = null): String? {
         var s: String? = null
         val d = JFileChooser()
@@ -371,6 +376,7 @@ class Window : JFrame(),  ActionListener{
         }
         return s
     }
+
     private fun saveImageFile(img: BufferedImage, parent: Component? = null): Boolean {
         val filefilter = FileNameExtensionFilter("JPG File", "jpg")
         val fileName = getFileName(filefilter, parent)
@@ -380,8 +386,11 @@ class Window : JFrame(),  ActionListener{
         }
         return true
     }
+
     private fun saveImage(fileName: String, img: BufferedImage): Boolean =
         saveImage(File(fileName), img)
+
+
     private fun saveImage(file: File, img: BufferedImage): Boolean {
         var ok = false
         if (!file.exists() || file.canWrite()) {
