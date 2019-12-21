@@ -85,8 +85,6 @@ class EditWindow() : JFrame() {
             editPainter.buf?.let {
                 //mas.addElement(mas)
                 imgCoords.add(CartesianPlane(plane.xMin, plane.xMax, plane.yMin, plane.yMax))
-                mas.addElement("1")
-
             }
         }
         val gl = GroupLayout(contentPane)
