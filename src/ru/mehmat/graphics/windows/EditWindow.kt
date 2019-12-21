@@ -33,8 +33,6 @@ class EditWindow() : JFrame() {
     init {
         defaultCloseOperation = WindowConstants.DISPOSE_ON_CLOSE
         dim = Dimension(700, 500)
-        minimumSize = dim
-        maximumSize = dim
 
         val plane = CartesianScreenPlane(
             -1,
@@ -58,43 +56,63 @@ class EditWindow() : JFrame() {
         btnStart = JButton("Начать создание видео")
 
 
-        btnStart.addActionListener {
-            val fr = 100
-            var out:SeekableByteChannel? = null
-            editPainter.buf?.let {
-                try {
-                    out = NIOUtils.writableFileChannel("./outt.mp4")
-                    val encoder = AWTSequenceEncoder(out,Rational.R(30,1))
-                    for (k in 0..100){
-                        encoder.encodeImage(it)
-                    }
-                    encoder.finish()
-                } finally {
-                    NIOUtils.closeQuietly(out)
-                }
-            }
 
-        }
 
         durVideo = JSpinner(SpinnerNumberModel(10, 1, 75, 1))
         val mas = DefaultListModel<String>()
         val imgCoords = ArrayList<CartesianPlane>()
         frameList = JList(mas)
 
-        btnAdd.addActionListener {
-            editPainter.buf?.let {
-                //mas.addElement(mas)
-                imgCoords.add(CartesianPlane(plane.xMin, plane.xMax, plane.yMin, plane.yMax))
+
+        btnStart.addActionListener {
+            val time = durVideo.value.toString().toInt()
+            val timforone = time / (imgCoords.size - 1)
+            val fps = 5
+            val framecount = timforone * fps
+            var out: SeekableByteChannel? = null
+
+            try {
+                out = NIOUtils.writableFileChannel("./outt.mp4")
+                val encoder = AWTSequenceEncoder(out, Rational.R(fps, 1))
+                for (k in 1..(imgCoords.size - 1)) {
+                    val dxmin = Math.abs(imgCoords[k].xMin - imgCoords[k-1].xMin)/framecount
+                    val dxmax = Math.abs(imgCoords[k-1].xMax - imgCoords[k].xMax)/framecount
+                    val dymin = Math.abs(imgCoords[k].yMin - imgCoords[k-1].yMin)/framecount
+                    val dymax = Math.abs(imgCoords[k-1].yMax - imgCoords[k].yMax)/framecount
+                    for (i in 0..(framecount - 1)) {
+                        editPainter.create()
+                        plane.xMin += dxmin
+                        plane.xMax -= dxmax
+                        plane.yMin += dymin
+                        plane.yMax -= dymax
+                        editPainter.buf?.let {
+                            encoder.encodeImage(it)
+                        }
+                    }
+                }
+                encoder.finish()
+            } finally {
+                NIOUtils.closeQuietly(out)
             }
+
+
+        }
+
+
+        btnAdd.addActionListener {
+            imgCoords.add(CartesianPlane(plane.xMin, plane.xMax, plane.yMin, plane.yMax))
+            mas.addElement("xMin: " + plane.xMin.toString() + " xMax: " + plane.xMax.toString() + " yMin: " + plane.yMin.toString() + " yMax: " + plane.yMax.toString())
         }
         val gl = GroupLayout(contentPane)
         layout = gl
+        var wdh = if ((dim.width * 0.8).toInt() % 2 == 0) (dim.width * 0.8).toInt() else (dim.width * 0.8).toInt() - 1
+
         gl.setHorizontalGroup(
             gl.createSequentialGroup()
                 .addGap(4)
                 .addComponent(
                     editmainPanel,
-                    (dim.width * 0.8).toInt(),
+                    wdh,
                     GroupLayout.DEFAULT_SIZE,
                     GroupLayout.DEFAULT_SIZE
                 )
@@ -107,6 +125,9 @@ class EditWindow() : JFrame() {
                 )
                 .addGap(4)
         )
+
+        var hdh =
+            if ((dim.height * 0.9).toInt() % 2 == 0) (dim.height * 0.9).toInt() else (dim.height * 0.9).toInt() - 1
         gl.setVerticalGroup(
             gl.createSequentialGroup()
                 .addGap(4)
@@ -114,7 +135,7 @@ class EditWindow() : JFrame() {
                     gl.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(
                             editmainPanel,
-                            (dim.height * 0.8).toInt(),
+                            hdh,
                             GroupLayout.DEFAULT_SIZE,
                             GroupLayout.DEFAULT_SIZE
                         )

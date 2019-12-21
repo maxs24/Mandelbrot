@@ -3,7 +3,7 @@ package ru.mehmat.math.fractals
 import ru.mehmat.math.Complex
 
 class Mandelbrot(var n:Int) {
-    var minIter=15
+    var minIter=50
     var maxIter = minIter
     val R = 2.0
     fun isInSet(x: Double, y: Double): Float {
