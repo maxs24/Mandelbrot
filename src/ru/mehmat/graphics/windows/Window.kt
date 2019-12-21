@@ -17,10 +17,7 @@ import javax.imageio.ImageWriteParam
 import javax.imageio.stream.FileImageOutputStream
 import javax.swing.*
 import javax.swing.filechooser.FileNameExtensionFilter
-import kotlin.math.abs
-import kotlin.math.cos
-import kotlin.math.log10
-import kotlin.math.sin
+import kotlin.math.*
 import kotlin.system.exitProcess
 
 class Window : JFrame(),  ActionListener{
@@ -194,7 +191,23 @@ class Window : JFrame(),  ActionListener{
         menuFractal.add(subColor)
 
         iterFractal = JCheckBoxMenuItem("Динамические итерации")
-        iterFractal.addActionListener(this)
+        iterFractal.addActionListener{
+            if (iterFractal.isSelected) {
+                mainPanel.dinIter = true
+                val coeffIncrease =(35/painter.fractal.minIter.toDouble())*ln(
+                    mainPanel.getSquare / ((painter.plane.xMax - painter.plane.xMin)
+                            * (painter.plane.yMax - painter.plane.yMin))
+                )
+                if (coeffIncrease - 1 > 1e-10) painter.fractal.maxIter =
+                    (painter.fractal.minIter * coeffIncrease).toInt()
+                println(painter.fractal.maxIter)
+            }else{
+                mainPanel.dinIter=false
+                painter.fractal.maxIter=painter.fractal.minIter
+            }
+            painter.created=false
+            mainPanel.repaint()
+        }
         menuFractal.add(iterFractal)
 
         prop = JCheckBoxMenuItem("Соблюдение пропорций")
@@ -311,6 +324,10 @@ class Window : JFrame(),  ActionListener{
             if(iterFractal.isSelected){
                 iterFractal.isSelected=false
             }
+
+            mainPanel.startApprox=false
+            mainPanel.dinIter=false
+            painter.fractal.maxIter=painter.fractal.minIter
             mainPanel.repaint()
         }
 
