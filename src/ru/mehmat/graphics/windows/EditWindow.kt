@@ -25,7 +25,7 @@ class EditWindow() : JFrame() {
     private val btnStart: JButton
     private val durVideo: JSpinner
     private val frameListPanel: JPanel
-    private var frameList: JList<BufferedImage>
+    private var frameList: JList<String>
 
     private val dim: Dimension
     private val editPainter: FractalPainter
@@ -34,6 +34,7 @@ class EditWindow() : JFrame() {
         defaultCloseOperation = WindowConstants.DISPOSE_ON_CLOSE
         dim = Dimension(700, 500)
         minimumSize = dim
+        maximumSize = dim
 
         val plane = CartesianScreenPlane(
             -1,
@@ -63,7 +64,7 @@ class EditWindow() : JFrame() {
             editPainter.buf?.let {
                 try {
                     out = NIOUtils.writableFileChannel("./outt.mp4")
-                    val encoder = AWTSequenceEncoder(out,Rational.R(25,3))
+                    val encoder = AWTSequenceEncoder(out,Rational.R(30,1))
                     for (k in 0..100){
                         encoder.encodeImage(it)
                     }
@@ -76,14 +77,16 @@ class EditWindow() : JFrame() {
         }
 
         durVideo = JSpinner(SpinnerNumberModel(10, 1, 75, 1))
-        val mas = Vector<BufferedImage>()
+        val mas = DefaultListModel<String>()
         val imgCoords = ArrayList<CartesianPlane>()
         frameList = JList(mas)
 
         btnAdd.addActionListener {
             editPainter.buf?.let {
-                mas.addElement(it)
+                //mas.addElement(mas)
                 imgCoords.add(CartesianPlane(plane.xMin, plane.xMax, plane.yMin, plane.yMax))
+                mas.addElement("1")
+
             }
         }
         val gl = GroupLayout(contentPane)
@@ -113,7 +116,7 @@ class EditWindow() : JFrame() {
                     gl.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(
                             editmainPanel,
-                            (dim.height * 0.9).toInt(),
+                            (dim.height * 0.8).toInt(),
                             GroupLayout.DEFAULT_SIZE,
                             GroupLayout.DEFAULT_SIZE
                         )
