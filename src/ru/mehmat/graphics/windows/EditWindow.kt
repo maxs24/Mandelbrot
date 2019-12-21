@@ -75,10 +75,10 @@ class EditWindow() : JFrame() {
                 out = NIOUtils.writableFileChannel("./outt.mp4")
                 val encoder = AWTSequenceEncoder(out, Rational.R(fps, 1))
                 for (k in 1..(imgCoords.size - 1)) {
-                    val dxmin = (imgCoords[k].xMin - imgCoords[k-1].xMin)/framecount
-                    val dxmax = (imgCoords[k-1].xMax - imgCoords[k].xMax)/framecount
-                    val dymin = (imgCoords[k].yMin - imgCoords[k-1].yMin)/framecount
-                    val dymax = (imgCoords[k-1].yMax - imgCoords[k].yMax)/framecount
+                    val dxmin = Math.abs(imgCoords[k].xMin - imgCoords[k-1].xMin)/framecount
+                    val dxmax = Math.abs(imgCoords[k-1].xMax - imgCoords[k].xMax)/framecount
+                    val dymin = Math.abs(imgCoords[k].yMin - imgCoords[k-1].yMin)/framecount
+                    val dymax = Math.abs(imgCoords[k-1].yMax - imgCoords[k].yMax)/framecount
                     for (i in 0..(framecount - 1)) {
                         editPainter.create()
                         plane.xMin += dxmin
