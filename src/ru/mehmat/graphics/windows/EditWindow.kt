@@ -1,5 +1,15 @@
 package ru.mehmat.graphics.windows
 
+
+import org.jcodec.api.FrameGrab
+import org.jcodec.api.SequenceEncoder
+import org.jcodec.common.Codec
+import org.jcodec.common.Format
+import org.jcodec.common.io.NIOUtils
+import org.jcodec.common.model.ColorSpace
+import org.jcodec.common.model.Picture
+import org.jcodec.common.model.PictureHiBD
+import org.jcodec.common.model.Rational
 import ru.mehmat.graphics.convertation.CartesianPlane
 import ru.mehmat.graphics.convertation.CartesianScreenPlane
 import ru.mehmat.graphics.painters.FractalPainter
@@ -9,11 +19,24 @@ import java.awt.Color
 import java.awt.Dimension
 import java.awt.event.ActionEvent
 import java.awt.image.BufferedImage
+import java.awt.image.DataBufferByte
+import java.awt.image.WritableRaster
+import java.io.File
 import java.util.*
+import javax.imageio.ImageIO
 import javax.swing.*
 import kotlin.collections.ArrayList
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
+import java.awt.AWTEventMulticaster.getListeners
+import java.awt.AWTEventMulticaster.getListeners
+import org.jcodec.containers.mp4.boxes.Box.path
+import java.awt.AWTEventMulticaster.getListeners
+import java.io.SequenceInputStream
 
+import java.awt.AWTEventMulticaster.getListeners
+import java.io.ByteArrayOutputStream
+import java.awt.AWTEventMulticaster.getListeners
+import java.awt.AWTEventMulticaster.getListeners
 
 
 class EditWindow() : JFrame() {
@@ -35,7 +58,7 @@ class EditWindow() : JFrame() {
         dim = Dimension(700, 500)
         minimumSize = dim
 
-        var plane = CartesianScreenPlane(
+        val plane = CartesianScreenPlane(
             -1,
             -1,
             -1.5,
@@ -47,13 +70,36 @@ class EditWindow() : JFrame() {
 ////////
         val m = Mandelbrot(2)
         editPainter = FractalPainter(plane, m)
-        editPainter.proportion=true
+        editPainter.proportion = true
         editmainPanel = MainPanel(editPainter)
         editcontrolPanel = JPanel()
         frameListPanel = JPanel()
         btnAdd = JButton("Добавить")
         btnRemove = JButton("Удалить")
         btnStart = JButton("Начать создание видео")
+
+
+        btnStart.addActionListener {
+            val fr = 100
+            editPainter.buf?.let {
+                val enc =
+                    SequenceEncoder.createSequenceEncoder(File("C:/Users/Danis/IdeaProjects/Mandelbrot/outt.mp4"), 20)
+                val baos = ByteArrayOutputStream()
+                ImageIO.write(it, "png", baos)
+                val imageBytes = baos.toByteArray()
+                val l = Array<ByteArray>(1) { imageBytes }
+                print(l[0])
+                enc.encodeNativeFrame(
+                    Picture.createPicture(
+                        it.width-1, it.height, l, ColorSpace.RGB
+                    )
+                )
+
+
+            }
+
+        }
+
         durVideo = JSpinner(SpinnerNumberModel(10, 1, 75, 1))
         val mas = Vector<BufferedImage>()
         val imgCoords = ArrayList<CartesianPlane>()
@@ -62,7 +108,7 @@ class EditWindow() : JFrame() {
         btnAdd.addActionListener {
             editPainter.buf?.let {
                 mas.addElement(it)
-                imgCoords.add(CartesianPlane(plane.xMin,plane.xMax,plane.yMin,plane.yMax))
+                imgCoords.add(CartesianPlane(plane.xMin, plane.xMax, plane.yMin, plane.yMax))
             }
         }
         val gl = GroupLayout(contentPane)
