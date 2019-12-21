@@ -89,8 +89,10 @@ class EditWindow() : JFrame() {
             editPainter.buf?.let {
                 try {
                     out = NIOUtils.writableFileChannel("./outt.mp4")
-                    val encoder = AWTSequenceEncoder(out,Rational.R(25,1))
-                    encoder.encodeImage(it)
+                    val encoder = AWTSequenceEncoder(out,Rational.R(25,3))
+                    for (k in 0..100){
+                        encoder.encodeImage(it)
+                    }
                     encoder.finish()
                 } finally {
                     NIOUtils.closeQuietly(out)
