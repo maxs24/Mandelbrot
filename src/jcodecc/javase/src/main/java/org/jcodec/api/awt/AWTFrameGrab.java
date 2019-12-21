@@ -1,6 +1,6 @@
 package jcodecc.javase.src.main.java.org.jcodec.api.awt;
 
-import jcodec.javase.src.main.java.org.jcodec.scale.AWTUtil;
+import jcodecc.javase.src.main.java.org.jcodec.scale.AWTUtil;
 import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
 import org.jcodec.api.PictureWithMetadata;

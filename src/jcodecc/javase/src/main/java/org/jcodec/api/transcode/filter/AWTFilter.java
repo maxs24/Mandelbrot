@@ -4,7 +4,7 @@ import static org.jcodec.common.model.ColorSpace.RGB;
 
 import java.awt.image.BufferedImage;
 
-import jcodec.javase.src.main.java.org.jcodec.scale.AWTUtil;
+import jcodecc.javase.src.main.java.org.jcodec.scale.AWTUtil;
 import org.jcodec.api.transcode.Filter;
 import org.jcodec.api.transcode.PixelStore;
 import org.jcodec.api.transcode.PixelStore.LoanerPicture;

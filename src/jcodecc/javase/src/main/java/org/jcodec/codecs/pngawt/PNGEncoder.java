@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
 
 import javax.imageio.ImageIO;
 
-import jcodec.javase.src.main.java.org.jcodec.scale.AWTUtil;
+import jcodecc.javase.src.main.java.org.jcodec.scale.AWTUtil;
 import org.jcodec.common.VideoEncoder;
 import org.jcodec.common.model.ColorSpace;
 import org.jcodec.common.model.Picture;

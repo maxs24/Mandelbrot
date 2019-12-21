@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import jcodec.javase.src.main.java.org.jcodec.scale.AWTUtil;
+import jcodecc.javase.src.main.java.org.jcodec.scale.AWTUtil;
 import org.jcodec.api.SequenceEncoder;
 import org.jcodec.common.Codec;
 import org.jcodec.common.Format;
