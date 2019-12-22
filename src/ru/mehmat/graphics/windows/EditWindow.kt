@@ -15,6 +15,7 @@ import java.util.*
 import javax.swing.*
 import kotlin.collections.ArrayList
 import java.awt.AWTEventMulticaster.getListeners
+import java.awt.Color
 import kotlin.concurrent.thread
 
 
@@ -29,6 +30,15 @@ class EditWindow() : JFrame() {
     private val frameListPanel: JPanel
     private var frameList: JList<ImageIcon>
 
+    private val cs: (Float) -> Color = { value ->
+        if (value >= 1) Color.BLACK
+        if (value < 0) Color.WHITE
+        Color(
+            Math.abs(Math.sin(Math.PI / 8 + 12 * value)).toFloat(),
+            Math.abs(Math.cos(Math.PI / 6 - 12 * value)).toFloat(),
+            Math.abs(Math.cos(Math.PI / 2 + 12 * value)).toFloat()
+        )
+    }
     private val dim: Dimension
     private val editPainter: FractalPainter
 
@@ -55,8 +65,12 @@ class EditWindow() : JFrame() {
         frameListPanel = JPanel()
         btnAdd = JButton("Добавить")
         btnRemove = JButton("Удалить")
+
+
         btnStart = JButton("Начать создание видео")
 
+
+        editPainter.setColorScheme(cs)
 
 
 
@@ -64,12 +78,16 @@ class EditWindow() : JFrame() {
         val images = DefaultListModel<ImageIcon>()
         val imgCoords = ArrayList<CartesianPlane>()
         frameList = JList(images)
-
+        btnRemove.addActionListener{
+            if (images.size()!=0){
+                images.remove(frameList.anchorSelectionIndex)
+            }
+        }
 
         btnStart.addActionListener {
             val time = durVideo.value.toString().toInt()
             val timforone = time / (imgCoords.size - 1)
-            val fps = 5
+            val fps = 30
             val framecount = timforone * fps
             var out: SeekableByteChannel? = null
             plane.xMin=-1.5
@@ -85,8 +103,7 @@ class EditWindow() : JFrame() {
                     val dymin = Math.abs(imgCoords[k].yMin - imgCoords[k-1].yMin)/framecount
                     val dymax = Math.abs(imgCoords[k-1].yMax - imgCoords[k].yMax)/framecount
                     for (i in 0..(framecount - 1)) {
-                        editPainter.created=false
-                        editmainPanel.repaint()
+                        editPainter.create()
                         plane.xMin += dxmin
                         plane.xMax -= dxmax
                         plane.yMin += dymin
@@ -101,8 +118,6 @@ class EditWindow() : JFrame() {
             } finally {
                 NIOUtils.closeQuietly(out)
             }
-
-
         }
 
 
