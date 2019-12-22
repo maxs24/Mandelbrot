@@ -11,7 +11,7 @@ import java.awt.Dimension
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
 import java.awt.image.BufferedImage
-import java.io.File
+import java.io.*
 import java.lang.Exception
 import javax.imageio.IIOImage
 import javax.imageio.ImageIO
@@ -21,13 +21,19 @@ import javax.swing.*
 import javax.swing.filechooser.FileNameExtensionFilter
 import kotlin.math.*
 import kotlin.system.exitProcess
+import javax.swing.JOptionPane
+import javax.swing.JFileChooser
+import java.io.IOException
+import java.io.FileWriter
 
-class Window : JFrame(),  ActionListener{
+
+class Window : JFrame(), ActionListener {
 
     override fun actionPerformed(p0: ActionEvent?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-//private var controlPanel: JPanel
+
+    //private var controlPanel: JPanel
 /*private val btnExit: JButton
          private val cbColor: JCheckBox
     private val cbProp: JCheckBox
@@ -40,7 +46,7 @@ class Window : JFrame(),  ActionListener{
     private val disXmin = -1.5
     private val disXmax = 1.5
     private val disYmin = -1.5
-    private val disYmax =  1.5
+    private val disYmax = 1.5
 
     private val menubar: JMenuBar
     private val menuFile: JMenu
@@ -69,9 +75,9 @@ class Window : JFrame(),  ActionListener{
     }
     private val cs1: (Float) -> Color = {
         Color(
-            108*it/255,
-            20*it/255,
-            180*it/255
+            108 * it / 255,
+            20 * it / 255,
+            180 * it / 255
         )
     }
     private val cs2: (Float) -> Color = {
@@ -128,25 +134,12 @@ class Window : JFrame(),  ActionListener{
 
         // элемент 2
         save = JMenuItem("Сохранить как..")
-        save.addActionListener {
-            painter.buf?.let {
-                val buf = BufferedImage(it.width, it.height + 100, BufferedImage.TYPE_INT_RGB)
-                buf.graphics.drawImage(it, 0, 0, it.width, it.height, null)
-                buf.graphics.color = Color.white
-                //buf.graphics.fillRect(0,it.height,it.width,it.height+100)
-                //buf.graphics.color= Color.black
-                buf.graphics.drawString("xmin= " + plane.xMin, 10, it.height + 70)
-                buf.graphics.drawString("xmax= " + plane.xMax, 10, it.height + 40)
-                buf.graphics.drawString("ymin= " + plane.yMin, it.width / 2, it.height + 70)
-                buf.graphics.drawString("ymax= " + plane.yMax, it.width / 2, it.height + 40)
-                saveImageFile(buf, this)
-            }
-        }
+
         menuFile.add(save)
 
         open = JMenuItem("Открыть..")
         menuFile.add(open)
-        open.addActionListener(this)
+
 
 
         close = JMenuItem("Закрыть")
@@ -193,26 +186,26 @@ class Window : JFrame(),  ActionListener{
         menuFractal.add(subColor)
 
         iterFractal = JCheckBoxMenuItem("Динамические итерации")
-        iterFractal.addActionListener{
+        iterFractal.addActionListener {
             if (iterFractal.isSelected) {
                 mainPanel.dinIter = true
-                val coeffIncrease =(35/painter.fractal.minIter.toDouble())*ln(
+                val coeffIncrease = (35 / painter.fractal.minIter.toDouble()) * ln(
                     mainPanel.getSquare / ((painter.plane.xMax - painter.plane.xMin)
                             * (painter.plane.yMax - painter.plane.yMin))
                 )
                 if (coeffIncrease - 1 > 1e-10) painter.fractal.maxIter =
                     (painter.fractal.minIter * coeffIncrease).toInt()
-            }else{
-                mainPanel.dinIter=false
-                painter.fractal.maxIter=painter.fractal.minIter
+            } else {
+                mainPanel.dinIter = false
+                painter.fractal.maxIter = painter.fractal.minIter
             }
-            painter.created=false
+            painter.created = false
             mainPanel.repaint()
         }
         menuFractal.add(iterFractal)
 
         prop = JCheckBoxMenuItem("Соблюдение пропорций")
-        prop.addActionListener  {
+        prop.addActionListener {
             painter.proportion = prop.isSelected
             if (prop.isSelected) {
                 painter.xmin = painter.plane.xMin
@@ -302,12 +295,12 @@ class Window : JFrame(),  ActionListener{
 
         //Анимация
         anim = JMenuItem("Анимация")
-        anim.addActionListener{
+        anim.addActionListener {
             EditWindow()
         }
         menuFractal.add(anim)
 
-        discharge.addActionListener{
+        discharge.addActionListener {
             painter.plane.xMin = disXmin
             painter.plane.xMax = disXmax
             painter.plane.yMin = disYmin
@@ -318,19 +311,174 @@ class Window : JFrame(),  ActionListener{
             painter.setColorScheme(cs)
 
             painter.proportion = false
-            if(prop.isSelected){
-                prop.isSelected=false
+            if (prop.isSelected) {
+                prop.isSelected = false
             }
 
 
-            if(iterFractal.isSelected){
-                iterFractal.isSelected=false
+            if (iterFractal.isSelected) {
+                iterFractal.isSelected = false
             }
 
-            mainPanel.startApprox=false
-            mainPanel.dinIter=false
-            painter.fractal.maxIter=painter.fractal.minIter
+            mainPanel.startApprox = false
+            mainPanel.dinIter = false
+            painter.fractal.maxIter = painter.fractal.minIter
             mainPanel.repaint()
+        }
+        save.addActionListener {
+
+            try {
+                val IMG = painter.buf?.let { it1 -> BufferedImageWrap(it1) }
+                val ab = SaveClass();
+                ab.xmin = painter.plane.xMin
+                ab.xmax = painter.plane.xMax
+                ab.ymax = painter.plane.yMax
+                ab.ymin = painter.plane.yMin
+                ab.IMG = IMG
+                ab.proportion = prop.isSelected
+                if (painter.cs == cs0) {
+                    ab.COLOR_CHEM = 0
+                } else if (painter.cs == cs1) {
+                    ab.COLOR_CHEM = 1
+                } else if (painter.cs == cs2) {
+                    ab.COLOR_CHEM = 2
+                } else if (painter.cs == cs3) {
+                    ab.COLOR_CHEM = 3
+                }
+
+                ab.DimamikIteration = iterFractal.isSelected
+
+
+
+
+
+                ab.typeFracta = painter.fractal.n
+                //ab.Height=painter.plane.realHeight
+                //ab.Width=painter.plane.realWidth
+                ab.Width = mainPanel.width
+                ab.Height = mainPanel.height
+
+
+                var filefilter = FileNameExtensionFilter("CLASS FRACTAL", "frc")
+                var s: String? = null
+                val d = JFileChooser()
+                d.isAcceptAllFileFilterUsed = false
+                d.fileFilter = filefilter
+                d.currentDirectory = File(".")
+                d.dialogTitle = "Сохранить файл"
+                d.approveButtonText = "Сохранить"
+                val res: Int = d.showSaveDialog(parent)
+                if (res == JFileChooser.APPROVE_OPTION) {
+                    s = d.selectedFile.absolutePath ?: ""
+                    if (!d.fileFilter.accept(d.selectedFile)) {
+                        s += "." + (filefilter?.extensions?.get(0) ?: "")
+                    }
+                }
+
+                val fileOutputStream = FileOutputStream(s)
+                val objectOutputStream = ObjectOutputStream(fileOutputStream)
+                objectOutputStream.writeObject(ab)
+                objectOutputStream.close()
+                //println(ab.Height)
+            } catch (e: Exception) {
+
+            }
+
+
+        }
+        open.addActionListener {
+
+            try {
+                var filefilter = FileNameExtensionFilter("CLASS FRACTAL", "frc")
+
+                val d = JFileChooser()
+                d.isAcceptAllFileFilterUsed = false
+                d.fileFilter = filefilter
+                d.currentDirectory = File(".")
+                d.dialogTitle = "Выберите файл"
+                d.approveButtonText = "Выбрать"
+                // Определяем фильтры типов файлов
+                d.addChoosableFileFilter(filefilter)
+                // Определение режима - только файл
+                d.fileSelectionMode = JFileChooser.FILES_ONLY
+                val result = d.showOpenDialog(null)
+
+                if (result == JFileChooser.APPROVE_OPTION) {//если выбрали файл
+
+
+                    val fileInputStream = FileInputStream(d.selectedFile)
+                    val objectInputStream = ObjectInputStream(fileInputStream)
+                    var bc = objectInputStream.readObject() as SaveClass
+                    objectInputStream.close()
+
+                    painter.readyBuf = bc.IMG?.image
+                    prop.isSelected = bc.proportion
+                    painter.proportion = bc.proportion
+
+                    if (bc.COLOR_CHEM == 0) {
+                        painter.setColorScheme(cs0)
+                    } else if (bc.COLOR_CHEM == 1) {
+                        painter.setColorScheme(cs1)
+                    } else if (bc.COLOR_CHEM == 2) {
+                        painter.setColorScheme(cs2)
+                    } else if (bc.COLOR_CHEM == 3) {
+                        painter.setColorScheme(cs3)
+                    }
+
+
+                    iterFractal.isSelected = bc.DimamikIteration
+                    mainPanel.dinIter = bc.DimamikIteration
+
+
+
+                    painter.fractal.n = bc.typeFracta
+                    painter.plane.xMax = bc.xmax
+                    painter.plane.xMin = bc.xmin
+                    painter.plane.yMax = bc.ymax
+                    painter.plane.yMin = bc.ymin
+
+                    this.setSize(Dimension(bc.Width, bc.Height))
+
+
+                    //bc.IMG?.image?.let { it1 -> painter.paints(graphics, it1) }
+                    // painter.readyBuf= bc.IMG?.image
+
+                    //painter.created=true
+                    var g = mainPanel.graphics
+                    // var g= painter.buf?.graphics
+                    if (g != null) {
+                        g.drawImage(bc.IMG?.image, 0, 0, plane.realWidth, plane.realHeight, null)
+                    }
+
+
+                    if (iterFractal.isSelected) {
+                        mainPanel.dinIter = true
+                        val coeffIncrease = (35 / painter.fractal.minIter.toDouble()) * ln(
+                            mainPanel.getSquare / ((painter.plane.xMax - painter.plane.xMin)
+                                    * (painter.plane.yMax - painter.plane.yMin))
+                        )
+                        if (coeffIncrease - 1 > 1e-10) painter.fractal.maxIter =
+                            (painter.fractal.minIter * coeffIncrease).toInt()
+                    } else {
+                        mainPanel.dinIter = false
+                        painter.fractal.maxIter = painter.fractal.minIter
+                    }
+
+                    if (bc.COLOR_CHEM == 0) {
+                        painter.setColorScheme(cs0)
+                    } else if (bc.COLOR_CHEM == 1) {
+                        painter.setColorScheme(cs1)
+                    } else if (bc.COLOR_CHEM == 2) {
+                        painter.setColorScheme(cs2)
+                    } else if (bc.COLOR_CHEM == 3) {
+                        painter.setColorScheme(cs3)
+                    }
+
+
+                }
+            } catch (e: Exception) {
+            }
+
         }
 
 
@@ -373,6 +521,7 @@ class Window : JFrame(),  ActionListener{
         painter.plane.realHeight = mainPanel.height
         isVisible = true
     }
+
 
     private fun getFileName(fileFilter: FileNameExtensionFilter, parent: Component? = null): String? {
         var s: String? = null
@@ -430,3 +579,52 @@ class Window : JFrame(),  ActionListener{
         return ok
     }
 }
+
+internal class BufferedImageWrap(image: BufferedImage) : Serializable {
+    val width: Int
+    val height: Int
+    var colors: Array<IntArray>? = null
+
+
+    val image: BufferedImage
+        get() {
+            val result = BufferedImage(
+                width,
+                height, BufferedImage.TYPE_INT_RGB
+            )
+            for (i in 0 until width)
+                for (j in 0 until height)
+                    result.setRGB(i, j, colors!![i][j])
+
+            return result
+        }
+
+    init {
+        this.width = image.width
+        this.height = image.height
+        this.colors = Array(width) { IntArray(height) }
+        for (x in 0 until width)
+            for (y in 0 until height)
+                colors!![x][y] = image.getRGB(x, y)
+    }
+
+}
+
+
+internal class SaveClass : Serializable {
+    var xmin: Double = 0.0
+    var xmax: Double = 0.0
+    var ymin: Double = 0.0
+    var ymax: Double = 0.0
+    var proportion: Boolean = false
+    var IMG: BufferedImageWrap? = null
+    var COLOR_CHEM: Int = 0
+    var DimamikIteration: Boolean = false
+    var typeFracta: Int = 0
+    var Height: Int = 0
+    var Width: Int = 0
+
+
+}
+
+
