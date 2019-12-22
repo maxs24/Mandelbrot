@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b0393121-fe54-4e64-bea5-3eb3533166d1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodecc/javase/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodecc/javase/src/main/java/org/jcodec/api/awt/AWTFrameGrab.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodecc/javase/src/main/java/org/jcodec/api/awt/AWTSequenceEncoder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodecc/javase/src/main/java/org/jcodec/api/awt/SequenceMuxer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodecc/javase/src/main/java/org/jcodec/api/transcode/filter/AWTFilter.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodecc/javase/src/main/java/org/jcodec/codecs/pngawt/PNGDecoder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodecc/javase/src/main/java/org/jcodec/codecs/pngawt/PNGEncoder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Mandelbrot/jcodecc/javase/src/main/java/org/jcodec/scale/AWTUtil.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out1t.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/outt.mp4" afterDir="false" />
+    <list default="true" id="b0393121-fe54-4e64-bea5-3eb3533166d1" name="Default Changelist" comment="new">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mandelbrot/ru/mehmat/graphics/windows/EditWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/outt.mp4" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/mehmat/graphics/windows/EditWindow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/mehmat/graphics/windows/EditWindow.kt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -27,26 +21,26 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/windows/EditWindow.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="80" selection-start-line="80" selection-end-line="80" />
+            <state relative-caret-position="243">
+              <caret line="114" column="49" lean-forward="true" selection-start-line="114" selection-start-column="49" selection-end-line="114" selection-end-column="49" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/painters/FractalPainter.kt">
+        <entry file="jar://C:/Program Files/Java/jdk-12/lib/src.zip!/java.desktop/javax/swing/ImageIcon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="42" column="30" selection-start-line="42" selection-start-column="30" selection-end-line="42" selection-end-column="30" />
+            <state relative-caret-position="3281">
+              <caret line="237" column="11" selection-start-line="237" selection-start-column="11" selection-end-line="237" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/mehmat/math/fractals/Mandelbrot.kt">
+        <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/windows/components/MainPanel.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+            <state relative-caret-position="153">
+              <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -111,8 +105,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/windows/Window.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6074">
-              <caret line="382" column="38" selection-start-line="382" selection-start-column="38" selection-end-line="382" selection-end-column="38" />
+            <state relative-caret-position="1938">
+              <caret line="133" column="75" selection-start-line="132" selection-start-column="16" selection-end-line="133" selection-end-column="75" />
               <folding>
                 <element signature="e#36#746#0" expanded="true" />
               </folding>
@@ -194,6 +188,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -287,6 +282,15 @@
               <item name="Mandelbrot" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="mehmat" type="462c0819:PsiDirectoryNode" />
+              <item name="graphics" type="462c0819:PsiDirectoryNode" />
+              <item name="windows" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Mandelbrot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Mandelbrot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="mehmat" type="462c0819:PsiDirectoryNode" />
               <item name="math" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -305,7 +309,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -525,14 +528,21 @@
       <option name="project" value="LOCAL" />
       <updated>1576954250135</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="new">
+      <created>1576963526524</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1576963526524</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.295302" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3033557" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -568,7 +578,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="new" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ru/mehmat/math/s.kt" />
     <entry file="file://$PROJECT_DIR$/src/ru/mehmat/math/Window.kt" />
     <entry file="file://$PROJECT_DIR$/src/ru/mehmat/math/fractals.kt" />
     <entry file="file://$PROJECT_DIR$/src/Main.kt">
@@ -666,13 +675,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/windows/components/MainPanel.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/awtlib/AWTUtil.java" />
     <entry file="file://$PROJECT_DIR$/src/awtlib/AWTSequenceEncoder.java" />
     <entry file="file://$PROJECT_DIR$/src/asd/AWTUtil.java" />
@@ -728,10 +730,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/painters/FractalPainter.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="42" column="30" selection-start-line="42" selection-start-column="30" selection-end-line="42" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/mehmat/math/fractals/Mandelbrot.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/windows/EditWindow.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="114" column="49" lean-forward="true" selection-start-line="114" selection-start-column="49" selection-end-line="114" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-12/lib/src.zip!/java.desktop/javax/swing/ImageIcon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3281">
+          <caret line="237" column="11" selection-start-line="237" selection-start-column="11" selection-end-line="237" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/windows/components/MainPanel.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -780,27 +810,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/painters/FractalPainter.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="42" column="30" selection-start-line="42" selection-start-column="30" selection-end-line="42" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/windows/Window.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6074">
-          <caret line="382" column="38" selection-start-line="382" selection-start-column="38" selection-end-line="382" selection-end-column="38" />
+        <state relative-caret-position="1938">
+          <caret line="133" column="75" selection-start-line="132" selection-start-column="16" selection-end-line="133" selection-end-column="75" />
           <folding>
             <element signature="e#36#746#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/mehmat/graphics/windows/EditWindow.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="80" selection-start-line="80" selection-end-line="80" />
         </state>
       </provider>
     </entry>

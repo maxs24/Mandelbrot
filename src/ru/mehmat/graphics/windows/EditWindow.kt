@@ -28,7 +28,7 @@ class EditWindow() : JFrame() {
     private val btnStart: JButton
     private val durVideo: JSpinner
     private val frameListPanel: JPanel
-    private var frameList: JList<String>
+    private var frameList: JList<ImageIcon>
 
     private val dim: Dimension
     private val editPainter: FractalPainter
@@ -62,15 +62,15 @@ class EditWindow() : JFrame() {
 
 
         durVideo = JSpinner(SpinnerNumberModel(10, 1, 75, 1))
-        val mas = DefaultListModel<String>()
+        val images = DefaultListModel<ImageIcon>()
         val imgCoords = ArrayList<CartesianPlane>()
-        frameList = JList(mas)
+        frameList = JList(images)
 
 
         btnStart.addActionListener {
             val time = durVideo.value.toString().toInt()
             val timforone = time / (imgCoords.size - 1)
-            val fps = 30
+            val fps = 5
             val framecount = timforone * fps
             var out: SeekableByteChannel? = null
             plane.xMin=-1.5
@@ -108,9 +108,14 @@ class EditWindow() : JFrame() {
 
 
         btnAdd.addActionListener {
-
             imgCoords.add(CartesianPlane(plane.xMin, plane.xMax, plane.yMin, plane.yMax))
-            mas.addElement("xMin: " + plane.xMin.toString() + " xMax: " + plane.xMax.toString() + " yMin: " + plane.yMin.toString() + " yMax: " + plane.yMax.toString())
+            editPainter.buf?.let {
+                val buf = BufferedImage((dim.width*0.4).toInt(), 100, BufferedImage.TYPE_INT_RGB)
+                buf.graphics.drawImage(it, 0, 0, (dim.width*0.4).toInt(),100, null)
+                images.addElement(ImageIcon(buf))
+            }
+
+
         }
         val gl = GroupLayout(contentPane)
         layout = gl
@@ -128,7 +133,7 @@ class EditWindow() : JFrame() {
                 .addGap(4)
                 .addComponent(
                     editcontrolPanel,
-                    (dim.width * 0.4).toInt(),
+                    (dim.width * 0.4).toInt()+10,
                     GroupLayout.PREFERRED_SIZE,
                     GroupLayout.PREFERRED_SIZE
                 )
