@@ -78,43 +78,87 @@ class EditWindow() : JFrame() {
         val images = DefaultListModel<ImageIcon>()
         val imgCoords = ArrayList<CartesianPlane>()
         frameList = JList(images)
-        btnRemove.addActionListener{
-            if (images.size()!=0){
+        btnRemove.addActionListener {
+            if (images.size() != 0) {
                 images.remove(frameList.anchorSelectionIndex)
             }
         }
 
         btnStart.addActionListener {
+            //            val time = durVideo.value.toString().toInt()
+//            val timforone = time / (imgCoords.size - 1)
+//            val fps = 30
+//            val framecount = timforone * fps
+//            var out: SeekableByteChannel? = null
+//            plane.xMin=-1.5
+//            plane.yMin=-1.5
+//            plane.yMax=1.5
+//            plane.xMax=1.5
+//            var masBuf = ArrayList<ArrayList<BufferedImage>>()
+//            try {
+//                out = NIOUtils.writableFileChannel("./outt.mp4")
+//                val encoder = AWTSequenceEncoder(out, Rational.R(fps, 1))
+//                for (k in 1..(imgCoords.size - 1)) {
+//                    val dxmin = Math.abs(imgCoords[k].xMin - imgCoords[k-1].xMin)/framecount
+//                    val dxmax = Math.abs(imgCoords[k-1].xMax - imgCoords[k].xMax)/framecount
+//                    val dymin = Math.abs(imgCoords[k].yMin - imgCoords[k-1].yMin)/framecount
+//                    val dymax = Math.abs(imgCoords[k-1].yMax - imgCoords[k].yMax)/framecount
+//                    for (i in 0..(framecount - 1)) {
+//                        editPainter.create()
+//                        plane.xMin += dxmin
+//                        plane.xMax -= dxmax
+//                        plane.yMin += dymin
+//                        plane.yMax -= dymax
+//                        editPainter.buf?.let {
+//                            encoder.encodeImage(it)
+//                        }
+//                    }
+//                }
+//                encoder.finish()
             val time = durVideo.value.toString().toInt()
             val timforone = time / (imgCoords.size - 1)
-            val fps = 30
+            val fps = 10
             val framecount = timforone * fps
             var out: SeekableByteChannel? = null
-            plane.xMin=-1.5
-            plane.yMin=-1.5
-            plane.yMax=1.5
-            plane.xMax=1.5
+            var masBuf = ArrayList<ArrayList<BufferedImage>>()
+            val t = mutableListOf<Thread>()
             try {
                 out = NIOUtils.writableFileChannel("./outt.mp4")
                 val encoder = AWTSequenceEncoder(out, Rational.R(fps, 1))
-                for (k in 1..(imgCoords.size - 1)) {
-                    val dxmin = Math.abs(imgCoords[k].xMin - imgCoords[k-1].xMin)/framecount
-                    val dxmax = Math.abs(imgCoords[k-1].xMax - imgCoords[k].xMax)/framecount
-                    val dymin = Math.abs(imgCoords[k].yMin - imgCoords[k-1].yMin)/framecount
-                    val dymax = Math.abs(imgCoords[k-1].yMax - imgCoords[k].yMax)/framecount
-                    for (i in 0..(framecount - 1)) {
-                        editPainter.create()
-                        plane.xMin += dxmin
-                        plane.xMax -= dxmax
-                        plane.yMin += dymin
-                        plane.yMax -= dymax
-                        editPainter.buf?.let {
-                            encoder.encodeImage(it)
+                for (j in 1..(imgCoords.size - 1)) {
+                    masBuf.add(ArrayList<BufferedImage>())
+                    t.add(thread {
+                        val k=j
+                        val plane2 = CartesianScreenPlane(plane.realWidth,plane.realHeight,imgCoords[k - 1].xMin,
+                            imgCoords[k-1].xMax,imgCoords[k - 1].yMin,imgCoords[k - 1].yMax
+                        )
+                        val cpainter = FractalPainter(plane2,m)
+                        val dxmin = Math.abs(imgCoords[k].xMin - imgCoords[k - 1].xMin) / framecount
+                        val dxmax = Math.abs(imgCoords[k - 1].xMax - imgCoords[k].xMax) / framecount
+                        val dymin = Math.abs(imgCoords[k].yMin - imgCoords[k - 1].yMin) / framecount
+                        val dymax = Math.abs(imgCoords[k - 1].yMax - imgCoords[k].yMax) / framecount
+                        for (i in 0..(framecount - 1)) {
+                            editPainter.create()
+                            plane2.xMin += dxmin
+                            plane2.xMax -= dxmax
+                            plane2.yMin += dymin
+                            plane2.yMax -= dymax
+                            cpainter.buf?.let {
+                                masBuf[k-1].add(it)
+                            }
                         }
+                    })
+                    for (th in t) {
+                        th.join()
+                    }
+
+                }
+                masBuf.forEach{ i->
+                    i.forEach{
+                        j->encoder.encodeImage(j)
                     }
                 }
                 encoder.finish()
-
             } finally {
                 NIOUtils.closeQuietly(out)
             }
@@ -124,8 +168,8 @@ class EditWindow() : JFrame() {
         btnAdd.addActionListener {
             imgCoords.add(CartesianPlane(plane.xMin, plane.xMax, plane.yMin, plane.yMax))
             editPainter.buf?.let {
-                val buf = BufferedImage((dim.width*0.4).toInt(), 100, BufferedImage.TYPE_INT_RGB)
-                buf.graphics.drawImage(it, 0, 0, (dim.width*0.4).toInt(),100, null)
+                val buf = BufferedImage((dim.width * 0.4).toInt(), 100, BufferedImage.TYPE_INT_RGB)
+                buf.graphics.drawImage(it, 0, 0, (dim.width * 0.4).toInt(), 100, null)
                 images.addElement(ImageIcon(buf))
             }
 
@@ -147,7 +191,7 @@ class EditWindow() : JFrame() {
                 .addGap(4)
                 .addComponent(
                     editcontrolPanel,
-                    (dim.width * 0.4).toInt()+10,
+                    (dim.width * 0.4).toInt() + 10,
                     GroupLayout.PREFERRED_SIZE,
                     GroupLayout.PREFERRED_SIZE
                 )
