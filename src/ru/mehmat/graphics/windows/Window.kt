@@ -2,6 +2,7 @@ package ru.mehmat.graphics.windows
 
 import ru.mehmat.graphics.convertation.CartesianScreenPlane
 import ru.mehmat.graphics.painters.FractalPainter
+import ru.mehmat.graphics.windows.components.JuliaWindow
 import ru.mehmat.graphics.windows.components.MainPanel
 import ru.mehmat.math.fractals.Mandelbrot
 import java.awt.Color
@@ -31,14 +32,7 @@ class Window : JFrame(),  ActionListener{
     }
 
     private val mainPanel: MainPanel
-    //private var controlPanel: JPanel
-    /*private val btnExit: JButton
-    private val cbColor: JCheckBox
-    private val cbProp: JCheckBox
-    private val btnSaveImg: JButton*/
-
     private val dim: Dimension
-
     private val painter: FractalPainter
 
     private val cs0: (Float) -> Color = {
@@ -68,7 +62,6 @@ class Window : JFrame(),  ActionListener{
         )
     }
 
-
     init {
         defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         dim = Dimension(500, 500)
@@ -90,7 +83,6 @@ class Window : JFrame(),  ActionListener{
         //controlPanel = JPanel()
 
         var q = false
-
 
         // создаем панель меню
         val menubar = JMenuBar()
@@ -235,8 +227,7 @@ class Window : JFrame(),  ActionListener{
 
         var julia = JMenuItem("Множество Жулиа")
         julia.addActionListener {
-            var x: Int
-            var y: Int
+            JuliaWindow()
         }
         subType.add(julia)
 
