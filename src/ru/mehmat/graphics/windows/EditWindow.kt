@@ -16,6 +16,7 @@ import javax.swing.*
 import kotlin.collections.ArrayList
 import java.awt.AWTEventMulticaster.getListeners
 import java.awt.Color
+import java.awt.Rectangle
 import kotlin.concurrent.thread
 import kotlin.math.abs
 import kotlin.math.cos
@@ -31,7 +32,7 @@ class EditWindow() : JFrame() {
     private val btnRemove: JButton
     private val btnStart: JButton
     private val durVideo: JSpinner
-    private val frameListPanel: JPanel
+    private val frameListPanel: JScrollPane
     private var frameList: JList<ImageIcon>
 
     private val cs: (Float) -> Color = {
@@ -56,33 +57,26 @@ class EditWindow() : JFrame() {
             -1.5,
             1.5
         )
-
-
         val m = Mandelbrot(2)
         editPainter = FractalPainter(plane, m)
         editPainter.proportion = true
         editmainPanel = MainPanel(editPainter)
         editmainPanel.dinIter = true
         editcontrolPanel = JPanel()
-        frameListPanel = JPanel()
+        frameListPanel = JScrollPane()
         btnAdd = JButton("Добавить")
         btnRemove = JButton("Удалить")
-
-
         btnStart = JButton("Начать создание видео")
-
-
         editPainter.setColorScheme(cs)
-        var wdh = if ((dim.width * 0.8).toInt() % 2 == 0) (dim.width * 0.8).toInt() else (dim.width * 0.8).toInt() - 1
-        var hdh =
+        val wdh = if ((dim.width * 0.8).toInt() % 2 == 0) (dim.width * 0.8).toInt() else (dim.width * 0.8).toInt() - 1
+        val hdh =
             if ((dim.height * 0.9).toInt() % 2 == 0) (dim.height * 0.9).toInt() else (dim.height * 0.9).toInt() - 1
-
-
 
         durVideo = JSpinner(SpinnerNumberModel(10, 1, 75, 1))
         val images = DefaultListModel<ImageIcon>()
         val imgCoords = ArrayList<CartesianPlane>()
         frameList = JList(images)
+        frameListPanel.setViewportView(frameList)
         btnRemove.addActionListener {
             if (images.size() != 0) {
                 images.remove(frameList.anchorSelectionIndex)
@@ -272,21 +266,6 @@ class EditWindow() : JFrame() {
                 .addGap(4)
         )
 
-        val gl3 = GroupLayout(frameListPanel)
-        frameListPanel.layout = gl3
-        gl3.setVerticalGroup(
-            gl3.createSequentialGroup()
-                .addComponent(
-                    frameList,
-                    GroupLayout.DEFAULT_SIZE,
-                    GroupLayout.DEFAULT_SIZE,
-                    GroupLayout.DEFAULT_SIZE
-                )
-        )
-        gl3.setHorizontalGroup(
-            gl3.createSequentialGroup()
-                .addComponent(frameList)
-        )
 
         pack()
         isVisible = true
