@@ -16,6 +16,7 @@ import javax.swing.*
 import kotlin.collections.ArrayList
 import java.awt.AWTEventMulticaster.getListeners
 import java.awt.Color
+import java.awt.Rectangle
 import kotlin.concurrent.thread
 
 
@@ -73,7 +74,6 @@ class EditWindow() : JFrame() {
         editPainter.setColorScheme(cs)
 
 
-
         durVideo = JSpinner(SpinnerNumberModel(10, 1, 75, 1))
         val images = DefaultListModel<ImageIcon>()
         val imgCoords = ArrayList<CartesianPlane>()
@@ -83,7 +83,7 @@ class EditWindow() : JFrame() {
                 images.remove(frameList.anchorSelectionIndex)
             }
         }
-
+        frameList.scrollRectToVisible(Rectangle(0,height,100,100))
         btnStart.addActionListener {
             //            val time = durVideo.value.toString().toInt()
 //            val timforone = time / (imgCoords.size - 1)
