@@ -116,7 +116,7 @@ class EditWindow() : JFrame() {
 //                encoder.finish()
             val time = durVideo.value.toString().toInt()
             val timforone = time / (imgCoords.size - 1)
-            val fps = 5
+            val fps = 30
             val framecount = timforone * fps
             var out: SeekableByteChannel? = null
             var masBuf = ArrayList<ArrayList<BufferedImage>>()
@@ -149,10 +149,9 @@ class EditWindow() : JFrame() {
                             }
                         }
                     })
-                    for (th in t) {
-                        th.join()
-                    }
-
+                }
+                for (th in t) {
+                    th.join()
                 }
                 masBuf.forEach{ i->
                     i.forEach{
