@@ -18,8 +18,8 @@ class FractalPainter(var plane: CartesianScreenPlane,
     var xmax=0.0
     var ymin=0.0
     var ymax=0.0
-    private var cs: (Float) -> Color
-    private var readyBuf: BufferedImage? = null
+    var cs: (Float) -> Color
+    var readyBuf: BufferedImage? = null
     val buf: BufferedImage?
         get() = readyBuf
     private val threads: MutableList<Thread> = mutableListOf()
