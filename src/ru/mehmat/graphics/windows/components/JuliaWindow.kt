@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent
 import javax.swing.GroupLayout
 import javax.swing.JFrame
 import javax.swing.WindowConstants
+import kotlin.math.ln
 
 class JuliaWindow: JFrame(), ActionListener {
         override fun actionPerformed(p0: ActionEvent?) {
@@ -50,6 +51,7 @@ class JuliaWindow: JFrame(), ActionListener {
     panel.addMouseListener(
     object : MouseAdapter(){
         override fun mousePressed(e: MouseEvent) {
+            super.mousePressed(e)
             painter.x_c = Converter.xScr2Crt(e.x, plane)
             painter.y_c = Converter.yScr2Crt(e.y, plane)
             painter.isJulia = true
