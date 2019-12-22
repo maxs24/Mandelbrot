@@ -43,6 +43,8 @@ class FractalPainter(var plane: CartesianScreenPlane,
         gr.drawImage(readyBuf, 0, 0, plane.realWidth, plane.realHeight, null)
     }
 
+
+
     fun create() {
         val buf = BufferedImage(plane.realWidth, plane.realHeight, BufferedImage.TYPE_INT_RGB)
         val g = buf.graphics

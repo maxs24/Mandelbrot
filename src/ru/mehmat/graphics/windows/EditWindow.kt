@@ -15,8 +15,7 @@ import java.util.*
 import javax.swing.*
 import kotlin.collections.ArrayList
 import java.awt.AWTEventMulticaster.getListeners
-
-
+import kotlin.concurrent.thread
 
 
 class EditWindow() : JFrame() {
@@ -46,7 +45,7 @@ class EditWindow() : JFrame() {
             1.5
         )
 
-////////
+
         val m = Mandelbrot(2)
         editPainter = FractalPainter(plane, m)
         editPainter.proportion = true
@@ -77,8 +76,6 @@ class EditWindow() : JFrame() {
             plane.yMin=-1.5
             plane.yMax=1.5
             plane.xMax=1.5
-
-
             try {
                 out = NIOUtils.writableFileChannel("./outt.mp4")
                 val encoder = AWTSequenceEncoder(out, Rational.R(fps, 1))
@@ -88,7 +85,8 @@ class EditWindow() : JFrame() {
                     val dymin = Math.abs(imgCoords[k].yMin - imgCoords[k-1].yMin)/framecount
                     val dymax = Math.abs(imgCoords[k-1].yMax - imgCoords[k].yMax)/framecount
                     for (i in 0..(framecount - 1)) {
-                        editPainter.create()
+                        editPainter.created=false
+                        editmainPanel.repaint()
                         plane.xMin += dxmin
                         plane.xMax -= dxmax
                         plane.yMin += dymin
@@ -99,6 +97,7 @@ class EditWindow() : JFrame() {
                     }
                 }
                 encoder.finish()
+
             } finally {
                 NIOUtils.closeQuietly(out)
             }
