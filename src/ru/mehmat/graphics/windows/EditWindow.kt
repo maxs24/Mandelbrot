@@ -18,6 +18,10 @@ import java.awt.AWTEventMulticaster.getListeners
 import java.awt.Color
 import java.awt.Rectangle
 import kotlin.concurrent.thread
+import kotlin.math.abs
+import kotlin.math.cos
+import kotlin.math.log10
+import kotlin.math.sin
 
 
 class EditWindow() : JFrame() {
@@ -28,16 +32,14 @@ class EditWindow() : JFrame() {
     private val btnRemove: JButton
     private val btnStart: JButton
     private val durVideo: JSpinner
-    private val frameListPanel: JPanel
+    private val frameListPanel: JScrollPane
     private var frameList: JList<ImageIcon>
 
-    private val cs: (Float) -> Color = { value ->
-        if (value >= 1) Color.BLACK
-        if (value < 0) Color.WHITE
-        Color(
-            Math.abs(Math.sin(Math.PI / 8 + 12 * value)).toFloat(),
-            Math.abs(Math.cos(Math.PI / 6 - 12 * value)).toFloat(),
-            Math.abs(Math.cos(Math.PI / 2 + 12 * value)).toFloat()
+    private val cs: (Float) -> Color = {
+        Color.getHSBColor(
+            abs(cos(5 * it)),
+            (log10(abs(sin(10 * it)))),
+            abs(sin(10 * it)).toFloat()
         )
     }
     private val dim: Dimension
@@ -55,35 +57,32 @@ class EditWindow() : JFrame() {
             -1.5,
             1.5
         )
-
-
         val m = Mandelbrot(2)
         editPainter = FractalPainter(plane, m)
         editPainter.proportion = true
         editmainPanel = MainPanel(editPainter)
         editmainPanel.dinIter = true
         editcontrolPanel = JPanel()
-        frameListPanel = JPanel()
+        frameListPanel = JScrollPane()
         btnAdd = JButton("Добавить")
         btnRemove = JButton("Удалить")
-
-
         btnStart = JButton("Начать создание видео")
-
-
         editPainter.setColorScheme(cs)
-
+        val wdh = if ((dim.width * 0.8).toInt() % 2 == 0) (dim.width * 0.8).toInt() else (dim.width * 0.8).toInt() - 1
+        val hdh =
+            if ((dim.height * 0.9).toInt() % 2 == 0) (dim.height * 0.9).toInt() else (dim.height * 0.9).toInt() - 1
 
         durVideo = JSpinner(SpinnerNumberModel(10, 1, 75, 1))
         val images = DefaultListModel<ImageIcon>()
         val imgCoords = ArrayList<CartesianPlane>()
         frameList = JList(images)
+        frameListPanel.setViewportView(frameList)
         btnRemove.addActionListener {
             if (images.size() != 0) {
                 images.remove(frameList.anchorSelectionIndex)
             }
         }
-        frameList.scrollRectToVisible(Rectangle(0,height,100,100))
+
         btnStart.addActionListener {
             //            val time = durVideo.value.toString().toInt()
 //            val timforone = time / (imgCoords.size - 1)
@@ -117,7 +116,7 @@ class EditWindow() : JFrame() {
 //                encoder.finish()
             val time = durVideo.value.toString().toInt()
             val timforone = time / (imgCoords.size - 1)
-            val fps = 10
+            val fps = 5
             val framecount = timforone * fps
             var out: SeekableByteChannel? = null
             var masBuf = ArrayList<ArrayList<BufferedImage>>()
@@ -133,12 +132,14 @@ class EditWindow() : JFrame() {
                             imgCoords[k-1].xMax,imgCoords[k - 1].yMin,imgCoords[k - 1].yMax
                         )
                         val cpainter = FractalPainter(plane2,m)
+                        cpainter.proportion=true
+                        cpainter.setColorScheme(cs)
                         val dxmin = Math.abs(imgCoords[k].xMin - imgCoords[k - 1].xMin) / framecount
                         val dxmax = Math.abs(imgCoords[k - 1].xMax - imgCoords[k].xMax) / framecount
                         val dymin = Math.abs(imgCoords[k].yMin - imgCoords[k - 1].yMin) / framecount
                         val dymax = Math.abs(imgCoords[k - 1].yMax - imgCoords[k].yMax) / framecount
                         for (i in 0..(framecount - 1)) {
-                            editPainter.create()
+                            cpainter.create()
                             plane2.xMin += dxmin
                             plane2.xMax -= dxmax
                             plane2.yMin += dymin
@@ -177,7 +178,7 @@ class EditWindow() : JFrame() {
         }
         val gl = GroupLayout(contentPane)
         layout = gl
-        var wdh = if ((dim.width * 0.8).toInt() % 2 == 0) (dim.width * 0.8).toInt() else (dim.width * 0.8).toInt() - 1
+
 
         gl.setHorizontalGroup(
             gl.createSequentialGroup()
@@ -198,8 +199,7 @@ class EditWindow() : JFrame() {
                 .addGap(4)
         )
 
-        var hdh =
-            if ((dim.height * 0.9).toInt() % 2 == 0) (dim.height * 0.9).toInt() else (dim.height * 0.9).toInt() - 1
+
         gl.setVerticalGroup(
             gl.createSequentialGroup()
                 .addGap(4)
@@ -266,21 +266,6 @@ class EditWindow() : JFrame() {
                 .addGap(4)
         )
 
-        val gl3 = GroupLayout(frameListPanel)
-        frameListPanel.layout = gl3
-        gl3.setVerticalGroup(
-            gl3.createSequentialGroup()
-                .addComponent(
-                    frameList,
-                    GroupLayout.DEFAULT_SIZE,
-                    GroupLayout.DEFAULT_SIZE,
-                    GroupLayout.DEFAULT_SIZE
-                )
-        )
-        gl3.setHorizontalGroup(
-            gl3.createSequentialGroup()
-                .addComponent(frameList)
-        )
 
         pack()
         isVisible = true
