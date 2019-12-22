@@ -124,4 +124,5 @@ class MainPanel (var painter: FractalPainter): JPanel(){
             bgProcess.execute()
         }
     }
+
 }
