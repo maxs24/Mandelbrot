@@ -89,7 +89,6 @@ class EditWindow() : JFrame() {
             val time = durVideo.value.toString().toInt()
             val timforone = time / (imgCoords.size - 1)
             val fps = 30
-            var count =0
             val framecount = timforone * fps
             var out: SeekableByteChannel? = null
             val masBuf = ArrayList<ArrayList<BufferedImage>>()
@@ -120,8 +119,6 @@ class EditWindow() : JFrame() {
                                 plane2.yMax -= dymax
                                 cpainter.buf?.let {
                                     masBuf[k - 1].add(it)
-                                    count++
-                                    println(count)
                                 }
                             }
                         }
