@@ -1,6 +1,8 @@
 package ru.mehmat.graphics.windows
 
 import jcodecc.javase.src.main.java.org.jcodec.api.awt.AWTSequenceEncoder
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.jcodec.common.io.NIOUtils
 import org.jcodec.common.io.SeekableByteChannel
 import org.jcodec.common.model.Rational
@@ -84,79 +86,50 @@ class EditWindow() : JFrame() {
         }
 
         btnStart.addActionListener {
-            //            val time = durVideo.value.toString().toInt()
-//            val timforone = time / (imgCoords.size - 1)
-//            val fps = 30
-//            val framecount = timforone * fps
-//            var out: SeekableByteChannel? = null
-//            plane.xMin=-1.5
-//            plane.yMin=-1.5
-//            plane.yMax=1.5
-//            plane.xMax=1.5
-//            var masBuf = ArrayList<ArrayList<BufferedImage>>()
-//            try {
-//                out = NIOUtils.writableFileChannel("./outt.mp4")
-//                val encoder = AWTSequenceEncoder(out, Rational.R(fps, 1))
-//                for (k in 1..(imgCoords.size - 1)) {
-//                    val dxmin = Math.abs(imgCoords[k].xMin - imgCoords[k-1].xMin)/framecount
-//                    val dxmax = Math.abs(imgCoords[k-1].xMax - imgCoords[k].xMax)/framecount
-//                    val dymin = Math.abs(imgCoords[k].yMin - imgCoords[k-1].yMin)/framecount
-//                    val dymax = Math.abs(imgCoords[k-1].yMax - imgCoords[k].yMax)/framecount
-//                    for (i in 0..(framecount - 1)) {
-//                        editPainter.create()
-//                        plane.xMin += dxmin
-//                        plane.xMax -= dxmax
-//                        plane.yMin += dymin
-//                        plane.yMax -= dymax
-//                        editPainter.buf?.let {
-//                            encoder.encodeImage(it)
-//                        }
-//                    }
-//                }
-//                encoder.finish()
             val time = durVideo.value.toString().toInt()
             val timforone = time / (imgCoords.size - 1)
-            val fps = 5
+            val fps = 30
+            var count =0
             val framecount = timforone * fps
             var out: SeekableByteChannel? = null
-            var masBuf = ArrayList<ArrayList<BufferedImage>>()
-            val t = mutableListOf<Thread>()
+            val masBuf = ArrayList<ArrayList<BufferedImage>>()
             try {
                 out = NIOUtils.writableFileChannel("./outt.mp4")
                 val encoder = AWTSequenceEncoder(out, Rational.R(fps, 1))
-                for (j in 1..(imgCoords.size - 1)) {
-                    masBuf.add(ArrayList<BufferedImage>())
-                    t.add(thread {
-                        val k=j
-                        val plane2 = CartesianScreenPlane(plane.realWidth,plane.realHeight,imgCoords[k - 1].xMin,
-                            imgCoords[k-1].xMax,imgCoords[k - 1].yMin,imgCoords[k - 1].yMax
-                        )
-                        val cpainter = FractalPainter(plane2,m)
-                        cpainter.proportion=true
-                        cpainter.setColorScheme(cs)
-                        val dxmin = Math.abs(imgCoords[k].xMin - imgCoords[k - 1].xMin) / framecount
-                        val dxmax = Math.abs(imgCoords[k - 1].xMax - imgCoords[k].xMax) / framecount
-                        val dymin = Math.abs(imgCoords[k].yMin - imgCoords[k - 1].yMin) / framecount
-                        val dymax = Math.abs(imgCoords[k - 1].yMax - imgCoords[k].yMax) / framecount
-                        for (i in 0..(framecount - 1)) {
-                            cpainter.create()
-                            plane2.xMin += dxmin
-                            plane2.xMax -= dxmax
-                            plane2.yMin += dymin
-                            plane2.yMax -= dymax
-                            cpainter.buf?.let {
-                                masBuf[k-1].add(it)
+                runBlocking {
+                    for (j in 1..(imgCoords.size - 1)) {
+                        masBuf.add(ArrayList<BufferedImage>())
+                        val jl =launch {
+                            val k = j
+                            val plane2 = CartesianScreenPlane(
+                                plane.realWidth, plane.realHeight, imgCoords[k - 1].xMin,
+                                imgCoords[k - 1].xMax, imgCoords[k - 1].yMin, imgCoords[k - 1].yMax
+                            )
+                            val cpainter = FractalPainter(plane2, m)
+                            cpainter.proportion = true
+                            cpainter.setColorScheme(cs)
+                            val dxmin = Math.abs(imgCoords[k].xMin - imgCoords[k - 1].xMin) / framecount
+                            val dxmax = Math.abs(imgCoords[k - 1].xMax - imgCoords[k].xMax) / framecount
+                            val dymin = Math.abs(imgCoords[k].yMin - imgCoords[k - 1].yMin) / framecount
+                            val dymax = Math.abs(imgCoords[k - 1].yMax - imgCoords[k].yMax) / framecount
+                            for (i in 0..(framecount - 1)) {
+                                cpainter.create()
+                                plane2.xMin += dxmin
+                                plane2.xMax -= dxmax
+                                plane2.yMin += dymin
+                                plane2.yMax -= dymax
+                                cpainter.buf?.let {
+                                    masBuf[k - 1].add(it)
+                                    count++
+                                    println(count)
+                                }
                             }
                         }
-                    })
-                    for (th in t) {
-                        th.join()
                     }
-
                 }
-                masBuf.forEach{ i->
-                    i.forEach{
-                        j->encoder.encodeImage(j)
+                masBuf.forEach { i ->
+                    i.forEach { j ->
+                        encoder.encodeImage(j)
                     }
                 }
                 encoder.finish()
