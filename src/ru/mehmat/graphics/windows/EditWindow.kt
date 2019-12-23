@@ -94,7 +94,7 @@ class EditWindow() : JFrame() {
 
         btnStart.addActionListener {
             val time = durVideo.value.toString().toInt()
-            val fps = 5
+            val fps = 15
             MakeVideo(time,fps,imgCoords,plane,m,cs).createVideo()
         }
 
