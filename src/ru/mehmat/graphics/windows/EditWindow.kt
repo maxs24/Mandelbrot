@@ -11,6 +11,7 @@ import ru.mehmat.graphics.convertation.CartesianScreenPlane
 import ru.mehmat.graphics.painters.FractalPainter
 import ru.mehmat.graphics.windows.components.MainPanel
 import ru.mehmat.math.fractals.Mandelbrot
+import ru.mehmat.video.MakeVideo
 import java.awt.Dimension
 import java.awt.image.BufferedImage
 import java.util.*
@@ -19,6 +20,7 @@ import kotlin.collections.ArrayList
 import java.awt.AWTEventMulticaster.getListeners
 import java.awt.Color
 import java.awt.Rectangle
+import java.lang.Exception
 import kotlin.concurrent.thread
 import kotlin.math.abs
 import kotlin.math.cos
@@ -76,69 +78,29 @@ class EditWindow() : JFrame() {
 
         durVideo = JSpinner(SpinnerNumberModel(10, 1, 75, 1))
         val images = DefaultListModel<ImageIcon>()
-        val imgCoords = ArrayList<CartesianPlane>()
+        val imgCoords = DefaultListModel<CartesianPlane>()
         frameList = JList(images)
         frameListPanel.setViewportView(frameList)
         btnRemove.addActionListener {
             if (images.size() != 0) {
-                images.remove(frameList.anchorSelectionIndex)
+                try {
+                    images.remove(frameList.anchorSelectionIndex)
+                    imgCoords.remove(frameList.anchorSelectionIndex)
+                }catch (e:Exception){
+
+                }
             }
         }
 
         btnStart.addActionListener {
             val time = durVideo.value.toString().toInt()
-            val timforone = time / (imgCoords.size - 1)
-            val fps = 30
-            var count =0
-            val framecount = timforone * fps
-            var out: SeekableByteChannel? = null
-            val masBuf = ArrayList<ArrayList<BufferedImage>>()
-            try {
-                out = NIOUtils.writableFileChannel("./outt.mp4")
-                val encoder = AWTSequenceEncoder(out, Rational.R(fps, 1))
-                runBlocking {
-                    for (j in 1..(imgCoords.size - 1)) {
-                        masBuf.add(ArrayList<BufferedImage>())
-                        val jl =launch {
-                            val k = j
-                            val plane2 = CartesianScreenPlane(
-                                plane.realWidth, plane.realHeight, imgCoords[k - 1].xMin,
-                                imgCoords[k - 1].xMax, imgCoords[k - 1].yMin, imgCoords[k - 1].yMax
-                            )
-                            val cpainter = FractalPainter(plane2, m)
-                            cpainter.proportion = true
-                            cpainter.setColorScheme(cs)
-                            val dxmin = Math.abs(imgCoords[k].xMin - imgCoords[k - 1].xMin) / framecount
-                            val dxmax = Math.abs(imgCoords[k - 1].xMax - imgCoords[k].xMax) / framecount
-                            val dymin = Math.abs(imgCoords[k].yMin - imgCoords[k - 1].yMin) / framecount
-                            val dymax = Math.abs(imgCoords[k - 1].yMax - imgCoords[k].yMax) / framecount
-                            for (i in 0..(framecount - 1)) {
-                                cpainter.create()
-                                plane2.xMin += dxmin
-                                plane2.xMax -= dxmax
-                                plane2.yMin += dymin
-                                plane2.yMax -= dymax
-                                cpainter.buf?.let {
-                                    masBuf[k - 1].add(it)
-                                }
-                            }
-                        }
-                    }
-                }
-                masBuf.forEach { i ->
-                    i.forEach { j ->
-                        encoder.encodeImage(j)
-                    }
-                }
-                encoder.finish()
-            } finally {
-                NIOUtils.closeQuietly(out)
-            }
+            val fps = 5
+            MakeVideo(time,fps,imgCoords,plane,m,cs).createVideo()
         }
 
 
         btnAdd.addActionListener {
-            imgCoords.add(CartesianPlane(plane.xMin, plane.xMax, plane.yMin, plane.yMax))
+            imgCoords.addElement(CartesianPlane(plane.xMin, plane.xMax, plane.yMin, plane.yMax))
             editPainter.buf?.let {
                 val buf = BufferedImage((dim.width * 0.4).toInt(), 100, BufferedImage.TYPE_INT_RGB)
                 buf.graphics.drawImage(it, 0, 0, (dim.width * 0.4).toInt(), 100, null)

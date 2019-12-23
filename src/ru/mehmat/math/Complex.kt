@@ -26,6 +26,15 @@ class Complex(var x: Double, var y: Double) {
         )
     }
 
+     fun deg(z: Complex, n: Int): Complex{
+        var c = Complex(1.0,0.0)
+        for(i in 1..n)
+        {
+            c= c*z
+        }
+        return c
+    }
+
     val arg: Double
         get(){
             return sqrt(x * x + y * y)

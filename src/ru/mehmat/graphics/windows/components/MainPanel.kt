@@ -5,6 +5,7 @@ import ru.mehmat.graphics.painters.FractalPainter
 import ru.mehmat.graphics.painters.SelectionRectPainter
 import java.awt.Graphics
 import java.awt.event.*
+import java.lang.Math.abs
 import javax.swing.JPanel
 import javax.swing.SwingWorker
 import kotlin.math.ln
@@ -18,7 +19,11 @@ class MainPanel (var painter: FractalPainter): JPanel(){
     var dinIter = false
     inner class BackgroundProcess : SwingWorker<Unit, Unit>() {
         override fun doInBackground() {
-            painter.create()
+            if(painter.isJulia){
+                painter.create(painter.x_c,painter.y_c)
+            }else{
+                painter.create()
+            }
         }
 
         override fun done() {
@@ -48,12 +53,12 @@ class MainPanel (var painter: FractalPainter): JPanel(){
                     val y2 = Converter.yScr2Crt(srp.rightBottomPoint.y, painter.plane)
                     startApprox=true
                     if (!painter.proportion) {
-
-
-                        painter.plane.xMin = x1
-                        painter.plane.xMax = x2
-                        painter.plane.yMax = y1
-                        painter.plane.yMin = y2
+                        if(abs(x1-x2)*abs(y1-y2)>1e-10) {
+                            painter.plane.xMin = x1
+                            painter.plane.xMax = x2
+                            painter.plane.yMax = y1
+                            painter.plane.yMin = y2
+                        }
                         painter.xmin=painter.plane.xMin
                         painter.xmax=painter.plane.xMax
                         painter.ymin=painter.plane.yMin
