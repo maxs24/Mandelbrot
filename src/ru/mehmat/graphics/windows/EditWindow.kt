@@ -20,7 +20,9 @@ import kotlin.collections.ArrayList
 import java.awt.AWTEventMulticaster.getListeners
 import java.awt.Color
 import java.awt.Rectangle
+import java.io.File
 import java.lang.Exception
+import javax.swing.filechooser.FileNameExtensionFilter
 import kotlin.concurrent.thread
 import kotlin.math.abs
 import kotlin.math.cos
@@ -95,6 +97,22 @@ class EditWindow() : JFrame() {
         btnStart.addActionListener {
             val time = durVideo.value.toString().toInt()
             val fps = 15
+            var s: String? = null
+            val d = JFileChooser()
+            val filefilter = FileNameExtensionFilter("MP4","mp4")
+            d.isAcceptAllFileFilterUsed = false
+            d.currentDirectory = File(".")
+            d.fileFilter = filefilter
+            d.dialogTitle = "Сохранить файл"
+            d.approveButtonText = "Сохранить"
+            val res: Int = d.showSaveDialog(parent)
+            if (res == JFileChooser.APPROVE_OPTION) {
+                s = d.selectedFile.absolutePath ?: ""
+                if (!d.fileFilter.accept(d.selectedFile)) {
+                    s += "." + (filefilter?.extensions?.get(0) ?: "")
+                }
+            }
+            println(s)
             MakeVideo(time,fps,imgCoords,plane,m,cs).createVideo()
         }
 
