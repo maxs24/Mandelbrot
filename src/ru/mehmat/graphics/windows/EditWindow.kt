@@ -120,8 +120,6 @@ class EditWindow() : JFrame() {
                                 plane2.yMax -= dymax
                                 cpainter.buf?.let {
                                     masBuf[k - 1].add(it)
-                                    count++
-                                    println(count)
                                 }
                             }
                         }
