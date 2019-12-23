@@ -23,6 +23,7 @@ class MakeVideo(val time: Int,val fps: Int,val imgCoords: DefaultListModel<Carte
     var out: SeekableByteChannel? = null
     val masBuf = ArrayList<ArrayList<BufferedImage>>()
     fun createVideo() {
+        val square=9
         try {
             out = NIOUtils.writableFileChannel("./outt.mp4")
             val encoder = AWTSequenceEncoder(out, Rational.R(fps, 1))
@@ -35,7 +36,6 @@ class MakeVideo(val time: Int,val fps: Int,val imgCoords: DefaultListModel<Carte
                             plane.realWidth, plane.realHeight, imgCoords[k - 1].xMin,
                             imgCoords[k - 1].xMax, imgCoords[k - 1].yMin, imgCoords[k - 1].yMax
                         )
-                        val square=9
                         val dxmin = Math.abs(imgCoords[k].xMin - imgCoords[k - 1].xMin) / framecount
                         val dxmax = Math.abs(imgCoords[k - 1].xMax - imgCoords[k].xMax) / framecount
                         val dymin = Math.abs(imgCoords[k].yMin - imgCoords[k - 1].yMin) / framecount
